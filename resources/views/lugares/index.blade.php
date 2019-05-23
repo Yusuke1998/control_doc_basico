@@ -11,9 +11,9 @@
 				  <thead class="black white-text">
 				    <tr>
 				      <th scope="col">#</th>
-				      <th scope="col">Nombre</th>
+				      <th scope="col">Lugar</th>
+				      <th scope="col">Area</th>
 				      <th scope="col">Descripcion</th>
-				      <th scope="col">lugar</th>
 				      <th scope="col">accion</th>
 				    </tr>
 				  </thead>
@@ -21,9 +21,9 @@
 				    @foreach($lugares as $lugar)
 				    <tr>
                       <th>{{ $lugar->id }}</th>
-				      <td>{{ $lugar->name }}</td>
+				      <td>{{ $lugar->site }}</td>
+				      <td>{{ $lugar->area->name }}</td>
 				      <td>{{ $lugar->description }}</td>
-				      <td>{{ $lugar->lugar->name }}</td>
 				      <td>
 				      		<a class="btn btn-sm" data-toggle="modal" data-target="#updateModal" onclick="editarP({{ $lugar->id }});" title="">Editar</a>
 
@@ -56,7 +56,7 @@
 	      <div class="modal-body mx-3">
 	        <div class="md-form mb-5">
 	         {{--  <i class="fas fa-envelope prefix grey-text"></i> --}}
-	          <input type="text" name="name" id="nombre" class="form-control validate">
+	          <input type="text" name="site" id="nombre" class="form-control validate">
 	          <label data-error="Error" data-success="Bien" for="nombre">Nombre</label>
 	        </div>
 	        <div class="md-form mb-4">
@@ -65,7 +65,7 @@
 	          <label data-error="Error" data-success="Bien" for="descripcion">Descripcion</label>
 	        </div>
 	        <div class="md-form mb-4">
-	        	<select name="area_id">
+	        	<select name="area_id" id="area">
 	        		<option selected disable>Seleccion el Area</option>
 	        		@foreach($areas as $area)
 	        		<option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -101,7 +101,7 @@
 	      <div class="modal-body mx-3">
 	        <div class="md-form mb-5">
               <input type="hidden" name="_method" value="PUT">
-	          <input type="text" name="name" id="nombreu" class="form-control validate">
+	          <input type="text" name="site" id="nombreu" class="form-control validate">
 	          <label data-error="Error" data-success="Bien" for="nombreu">Nombre</label>
 			</div>
 	        <div class="md-form mb-4">
@@ -109,7 +109,7 @@
 	          <label data-error="Error" data-success="Bien" for="orangeForm-pass">Descripcion</label>
 			</div>
 	        <div class="md-form mb-4">
-	        	<select name="area_id">
+	        	<select name="area_id" id="areau">
 	        		<option selected disable>Seleccion el Area</option>
 	        		@foreach($areas as $area)
 	        		<option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -170,8 +170,9 @@
 		        type: 'get',
 		        url: url2,
 		        success: function(data) {
-                    $('#nombreu').val(data.name);
+                    $('#nombreu').val(data.site);
                     $('#descripcionu').val(data.description);
+                    $('#areau').val(data.area_id);
 				    $('#bsubmitu').on('click', function(e){  
 				        e.preventDefault();
 					    $.ajaxSetup({

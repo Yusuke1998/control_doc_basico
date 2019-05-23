@@ -11,12 +11,12 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->date('date');
-            $table->string('code')->unique()->nullable();
+            $table->string('description')->nullable();
             $table->string('type')->nullable();
             $table->string('file')->nullable();
-            $table->enum('status',['entregado','recibido','sin estado']);
-            $table->string('description')->nullable();
+            $table->integer('person_id')->unsigned();
+
+            $table->foreign('person_id')->references('id')->on('people')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -10,10 +10,6 @@ class Area extends Model
     	'name','description',
     ];
 
-    public function products(){
-    	return $this->hasMany(Product::class);
-    }
-
     public function sites(){
     	return $this->hasMany(Site::class);
     }

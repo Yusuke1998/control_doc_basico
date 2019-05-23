@@ -66,6 +66,12 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
     Route::post('cantidad','UsersController@cantidad')->name('user.cantidad');
 	// USUARIOS
 
+	// PERSONAS
+	Route::resource('personas','PersonController');
+	Route::post('editar/{id}','PersonController@editar')->name('person.editar');
+    Route::post('cantidad','PersonController@cantidad')->name('person.cantidad');
+	// PERSONAS
+
 	// documentos
 	Route::resource('documentos','DocumentController');
 	Route::post('editar/{id}','DocumentController@editar')->name('documentos.editar');

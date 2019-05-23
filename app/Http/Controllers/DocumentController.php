@@ -96,11 +96,6 @@ class DocumentController extends Controller
         return Response()->json($data);
     }
 
-    public function editar($id)
-    {
-        return view('documentos.edit');
-    }
-
     public function update(Request $request, $id)
     {
         $data = request()->validate(
@@ -126,29 +121,6 @@ class DocumentController extends Controller
         return json_encode($request);
     }
 
-    public function entradas($id)
-    {
-        $data = Document::find($id)->entrances()->get();
-        if($data == '[]'){
-                return Response()->json(['info'=>'No hay datos']);
-        }
-        else
-        {
-            return Response()->json($data->all());
-        }
-    }
-
-    public function salidas($id)
-    {
-        $data = Document::find($id)->deliverys()->get();
-        if($data == '[]'){
-                return Response()->json(['info'=>'No hay datos']);
-        }
-        else
-        {
-            return Response()->json($data->all());
-        }
-    }
 
     public function eliminar($id)
     {
@@ -173,12 +145,27 @@ class DocumentController extends Controller
         
     }
 
-    public function entradas(){
-
+    public function entradas($id)
+    {
+        $data = Document::find($id)->entrances()->get();
+        if($data == '[]'){
+                return Response()->json(['info'=>'No hay datos']);
+        }
+        else
+        {
+            return Response()->json($data->all());
+        }
     }
 
-    public function salidas(){
-        
+    public function salidas($id)
+    {
+        $data = Document::find($id)->deliverys()->get();
+        if($data == '[]'){
+                return Response()->json(['info'=>'No hay datos']);
+        }
+        else
+        {
+            return Response()->json($data->all());
+        }
     }
-
 }

@@ -1,5 +1,5 @@
 @extends('template.layout')
-@section('title') Direccion General de Administracion @stop
+@section('title') Control y seguimiento de documentos @stop
 @section('content')
   <!--Grid row-->
       <div class="row wow fadeIn">

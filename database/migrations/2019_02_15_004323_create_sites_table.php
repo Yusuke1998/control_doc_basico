@@ -12,9 +12,8 @@ class CreateSitesTable extends Migration
             $table->increments('id');
             $table->string('site');
             $table->integer('area_id')->unsigned();
-            $table->integer('document_id')->unsigned();
+            $table->string('description');
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
-            $table->foreign('document_id')->references('id')->on('documents')->onDelete('cascade');
             $table->timestamps();
         });
     }

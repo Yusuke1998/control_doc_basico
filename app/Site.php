@@ -7,14 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Site extends Model
 {
     protected $fillable = [
-    	'site','area_id','document_id',
+    	'site','area_id','description',
     ];
 
     public function area(){
-    	return $this->belognsTo(Area::class);
+    	return $this->belongsTo(Area::class);
     }
 
-    public function documents(){
-    	return $this->hasMany(Product::class);
+    public function entrances(){
+    	return $this->hasMany(Entrance::class);
+    }
+
+    public function deliveries(){
+    	return $this->hasMany(Delivery::class);
     }
 }
