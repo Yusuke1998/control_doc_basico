@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     protected $fillable = [
-        'title','type','description','file','affair','person_id'
+        'title','header','text','from','to','file','affair','person_id','document_type_id','date'
     ];
+
+    public function document_type(){
+    	return $this->belongsTo(Document_type::class);
+    }
 }

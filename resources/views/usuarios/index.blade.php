@@ -1,5 +1,5 @@
 @extends('template.layout')
-@section('title') Administrar usuarios @stop
+@section('title') Usuarios @stop
 @section('content')
 <div class="container">
 

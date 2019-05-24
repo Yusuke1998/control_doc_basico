@@ -1,5 +1,5 @@
 @extends('template.layout')
-@section('title') lugares @stop
+@section('title') Documentos @stop
 @section('content')
 	<div class="container">
 		<div class="row">
