@@ -27,4 +27,9 @@ class DeliveryController extends Controller
         return Response()->json($salida);
     }
 
+    public function ver($id)
+    {
+        return 'Soy la salida '.$id;
+    }
+
 }

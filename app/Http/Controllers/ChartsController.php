@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Document;
+use App\Entrance;
+use App\Delivery;
 
 class ChartsController extends Controller
 {

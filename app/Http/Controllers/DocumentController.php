@@ -20,7 +20,7 @@ class DocumentController extends Controller
     public function index()
     {
         $documentos = Document::all();
-        return view('documentos.index')->with('documentos',$documentos);
+        return view('documentos.index',compact('documentos'));
     }
 
     public function cantidad(){
@@ -77,7 +77,7 @@ class DocumentController extends Controller
 
     public function show($id)
     {
-        return $id;
+        return 'Soy el documento '.$id;
     }
 
     public function ajax($id){

@@ -27,4 +27,9 @@ class EntranceController extends Controller
         return Response()->json($entrada);
     }
 
+    public function ver($id)
+    {
+        return 'Soy la entrada '.$id;
+    }
+
 }

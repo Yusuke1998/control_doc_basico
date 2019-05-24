@@ -7,6 +7,10 @@ Route::get('documentos',function(){
 	return redirect(Route('dashboard'));
 });
 
+Route::get('reporte',function(){
+	return view('reportes.document');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -24,9 +28,7 @@ Route::get('DireccionDeInformatica',function(){
 Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 
 
-	Route::get('inicio', function(){
-		return view('dashboard');
-	})->name('dashboard');
+	Route::get('inicio', 'HomeController@index')->name('dashboard');
 
 	// AREAS
 	Route::resource('areas','AreaController');
@@ -40,12 +42,14 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 
 	// ENTRADAS
 	Route::resource('entradas','EntranceController');
+	Route::get('entradas/ver/{id}','EntranceController@ver')->name('entradas.ver');
 	Route::post('entradas/editar/{id}','EntranceController@editar')->name('entradas.editar');
     Route::post('entradas/cantidad','EntranceController@cantidad')->name('entradas.cantidad');
 	// ENTRADAS
 
 	// SALIDAS
 	Route::resource('salidas','DeliveryController');
+	Route::get('salidas/ver/{id}','DeliveryController@ver')->name('salidas.ver');
     Route::post('salidas/editar/{id}','DeliveryController@editar')->name('salidas.editar');
     Route::post('salidas/cantidad','DeliveryController@cantidad')->name('salidas.cantidad');
 	// SALIDAS
@@ -75,6 +79,7 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	// documentos
 	Route::resource('documentos','DocumentController');
 	Route::post('editar/{id}','DocumentController@editar')->name('documentos.editar');
+	Route::get('ver/{id}','DocumentController@show')->name('documentos.ver');
     Route::post('cantidad','DocumentController@cantidad')->name('documentos.cantidad');
 	// documentos
 
