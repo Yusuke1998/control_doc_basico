@@ -20,15 +20,16 @@ Route::get('DireccionDeInformatica',function(){
 		[
 			['estado'=>'inicio del sistema','fecha'=>'22/05/2019'],
 			['nombre'=>'Jhonny Pérez','correo'=>'jhperez@unerg.edu.ve'],
-			['estado'=>'sistema finalizado','fecha'=>'00/00/2019'],
+			['estado'=>'sistema finalizado','fecha'=>'31/05/2019'],
 		]
 	];
 })->name('autor');
 
 Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 
-
+	// INCIO
 	Route::get('inicio', 'HomeController@index')->name('dashboard');
+	// INCIO
 
 	// AREAS
 	Route::resource('areas','AreaController');
@@ -56,11 +57,8 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 
     // GRAFICAS
 	Route::get('/charts','ChartsController@charts')->name('charts');
-
 	Route::get('/charts/entradas','ChartsController@charts_entradas')->name('charts_entradas');
-
 	Route::get('/charts/salidas','ChartsController@charts_salidas')->name('charts_salidas');
-
 	Route::get('/charts/entradas/salidas','ChartsController@charts_entradas_salidas')->name('charts_entradas_salidas');
     // GRAFICAS
 
@@ -80,7 +78,13 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	Route::resource('documentos','DocumentController');
 	Route::post('editar/{id}','DocumentController@editar')->name('documentos.editar');
 	Route::get('ver/{id}','DocumentController@show')->name('documentos.ver');
+	Route::post('eliminar/{id}','DocumentController@destroy')->name('documentos.eliminar');
     Route::post('cantidad','DocumentController@cantidad')->name('documentos.cantidad');
+    Route::get('tipo/documento','DocumentTypeController@index')->name('tipos.index');
+    Route::post('nuevo/tipo/documento','DocumentTypeController@store')->name('tipos.crear');
+    Route::post('eliminar/tipo/documento/{id}','DocumentTypeController@destroy')->name('tipos.eliminar');
+    Route::post('editar/tipo/documento/{id}','DocumentTypeController@edit')->name('tipos.editar');
+    Route::post('actualizar/tipo/documento/{id}','DocumentTypeController@update')->name('tipos.actualizar');
 	// documentos
 
 	// Entradas y salidas por documento
@@ -104,6 +108,4 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 		// EXCEL
 	Route::get('bitacora/excel/{tipe}','ReportesController@bitacora_excel')->name('bitacora.excel');
 	// Reportes
-
-
 });

@@ -11,7 +11,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password','type'
+        'name', 'email', 'password','type','person_id'
     ];
 
     protected $hidden = [
@@ -20,5 +20,13 @@ class User extends Authenticatable
 
     public function binnacles(){
     	return $this->hasMany(Binnacle::class);
+    }
+
+    public function documents(){
+        return $this->hasMany(Document::class);
+    }
+
+    public function person(){
+        return $this->belongsTo(Person::class);
     }
 }

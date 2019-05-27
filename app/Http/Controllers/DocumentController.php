@@ -84,13 +84,18 @@ class DocumentController extends Controller
 
         $documento = Document::find($id);
         $data = [
-            'code'          =>  $documento->code,
-            'name'          =>  $documento->name,
-            'type'          =>  $documento->type,
-            'description'   =>  $documento->description,
-            'status'        =>  $documento->status,
-            'file'          =>  $documento->file,
-            'date'          =>  $documento->date,
+            'code'              =>  $documento->code,
+            'title'             =>  $documento->title,
+            'header'            =>  $documento->header,
+            'text'              =>  $documento->text,
+            'from'              =>  $documento->from,
+            'to'                =>  $documento->to,
+            'file'              =>  $documento->file,
+            'affair'            =>  $documento->affair,
+            'person_id'         =>  $documento->person_id,
+            'document_type_id'  =>  $documento->document_type_id,
+            'date'              =>  $documento->date,
+            'user_id'           =>  $documento->user_id
         ];
 
         return Response()->json($data);
@@ -122,7 +127,7 @@ class DocumentController extends Controller
     }
 
 
-    public function eliminar($id)
+    public function destroy($id)
     {
         $documento = Document::find($id);
         $name = $documento->name;

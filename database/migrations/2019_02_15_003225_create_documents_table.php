@@ -21,6 +21,8 @@ class CreateDocumentsTable extends Migration
             $table->integer('document_type_id')->unsigned(); #tipo
             $table->integer('person_id')->unsigned(); #persona_id
             $table->foreign('person_id')->references('id')->on('people')->onDelete('cascade');
+            $table->integer('user_id')->unsigned(); #usuario_id
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('document_type_id')->references('id')->on('document_types')->onDelete('cascade');
             $table->timestamps();
         });

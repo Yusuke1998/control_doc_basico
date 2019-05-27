@@ -4,8 +4,11 @@
 <div class="container">
 
   <div class="row">
-    <div id="all-users" class="col">
-    <table id="user_table" class="table">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createModal">Nuevo</button>
+    </div>
+    <div id="all-users" class="col-md-12">
+    <table id="user_table" class="table table-striped table-bordered">
 		  <thead class="black white-text">
 		    <tr>
 		      <th scope="col">#</th>
@@ -35,7 +38,8 @@
 		  </tbody>
 		</table>
     </div>
-    <div class="col">
+
+    {{-- <div class="col">
     <form id="my_form" method="post">
         {{ csrf_field() }}
         <div class="modal-dialog" role="document">
@@ -74,7 +78,7 @@
           </div>
         </div>
       </form>
-    </div>
+    </div> --}}
   </div>
 </div>
 @section('my-js')
