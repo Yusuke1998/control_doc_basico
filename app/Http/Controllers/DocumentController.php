@@ -91,9 +91,21 @@ class DocumentController extends Controller
 
     }
 
-    public function show($id)
-    {
-        return 'Soy el documento '.$id;
+    public function show($id){
+        $documento = Document::find($id);
+        $documento = [
+            'code'      => $documento->code,
+            'title'     => $documento->title,
+            'header'    => $documento->header,
+            'from'      => $documento->from,
+            'to'        => $documento->to,
+            'file'      => $documento->file,
+            'text'      => $documento->text,
+            'affair'    => $documento->affair,
+            'date'      => $documento->date,
+            'user'      => $documento->user->name,
+        ];
+        return view('documentos.show',compact('documento'));
     }
 
     public function update(Request $request, $id)

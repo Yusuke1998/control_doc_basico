@@ -191,6 +191,7 @@
 	            { "data": "date" },
 	            { "data": null, render: function(data,type,row){
 	            	return `
+	            	<a target="_blank" href='ver/documento/${data.id}' title='Ver' class='btn btn-info btn-sm'>Ver</a>
 	            	<a href='#' onclick='editar("${data.id}")' data-toggle='modal' data-target='#updateModal' title='Editar' class='btn btn-warning btn-sm'>Editar</a>
 	            	<a href='#' onclick='eliminar("${data.id}")' title='Eliminar' class='btn btn-danger btn-sm'>Eliminar</a>`;
 	            }}

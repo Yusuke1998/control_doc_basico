@@ -14,8 +14,9 @@ class CreatePeopleTable extends Migration
             $table->string('type_ci');
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('address');
-            $table->string('phone');
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('cargo')->nullable();
             $table->timestamps();
         });
     }
