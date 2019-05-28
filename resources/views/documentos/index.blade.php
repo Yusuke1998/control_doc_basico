@@ -7,7 +7,7 @@
 		        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createModal">Nuevo</button>
 		    </div>
 			<div class="col-md-12">
-				<table id="tb" class="table table-striped table-bordered">
+				<table id="tb" class="display" style="width:100%">
 					<thead class="black white-text">
 						<tr>
 							<th>#</th>
@@ -15,31 +15,11 @@
 							<th>De</th>
 							<th>Para</th>
 							<th>Asunto</th>
-							<th>Fecha</th>
 							<th>Tipo de documento</th>
+							<th>Fecha</th>
 							<th>Accion</th>
 						</tr>
 					</thead>
-					<tbody>
-						@foreach($documentos as $documento)
-						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>
-								<a class="btn btn-sm" href="{{ Route('documentos.ver',$documento->id) }}" title="">Ver</a>
-
-								<a class="btn btn-sm" data-toggle="modal" data-target="#updateModal" onclick="editar({{ $documento->id }});" title="">Editar</a>
-
-				      			<a class="btn btn-sm" id="eliminar" href="{{ Route('documentos.destroy',$documento->id) }}" title="Eliminar">Eliminar</a>
-							</td>
-						</tr>
-						@endforeach
-					</tbody>
 				</table>
 			</div>
 		</div>
@@ -52,10 +32,10 @@
 		{{-- enctype='multipart/form-data' --}}
 		{{ csrf_field() }}
 		  <!-- Change class .modal-sm to change the size of the modal -->
-		  <div class="modal-dialog modal-md" role="document">
+		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h4 class="modal-title w-100" id="myModalLabel">Nuevo producto</h4>
+		        <h4 class="modal-title w-100" id="myModalLabel">Nuevo documento</h4>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -64,6 +44,10 @@
 		        <div class="md-form mb-5">
 		          <input type="text" name="title" id="title" class="form-control validate">
 		          <label data-error="Error" data-success="Bien" for="title">Titulo</label>
+		        </div>
+		        <div class="md-form mb-5">
+		          <input type="text" name="affair" id="affair" class="form-control validate">
+		          <label data-error="Error" data-success="Bien" for="affair">Asunto</label>
 		        </div>
 		        <div class="md-form mb-5">
 		          <input type="text" name="header" id="header" class="form-control validate">
@@ -78,8 +62,11 @@
 		          <label data-error="Error" data-success="Bien" for="to">Para</label>
 		        </div>
 		        <div class="md-form mb-5">
-		          <select type="text" name="type" id="tipo" class="form-control validate">
+		          <select type="text" name="document_type_id" id="document_type_id" class="form-control validate">
 		          		<option selected disabled>Tipo de documento</option>
+		          		@foreach($tipos as $tipo)
+		          			<option value="{{ $tipo->id }}">{{ $tipo->name }}</option>
+		          		@endforeach
 		          </select>
 				</div>
 		        <div class="md-form mb-4">
@@ -88,15 +75,178 @@
 		        </div>
 		        <label data-error="Error" data-success="Bien" for="fechaC">Fecha</label>
 		        <div class="md-form mb-4">
-		          <input type="date" id="fechaC" autofocus="true" name="date" class="form-control validate">
+		          <input  type="date" id="fechaC" autofocus="true" name="date" class="form-control validate">
 		        </div>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
-		        <button type="button" id="bsubmit" class="btn btn-primary btn-sm">Guardar</button>
+		        <button type="submit" id="bsubmit" class="btn btn-primary btn-sm">Guardar</button>
 		      </div>
 		    </div>
 		  </div>
 		</form>
 	</div>
+
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	  aria-hidden="true">
+		<form action="" method="post" id="my_formU">
+		{{-- enctype='multipart/form-data' --}}
+		{{ csrf_field() }}
+		  <!-- Change class .modal-sm to change the size of the modal -->
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title w-100" id="myModalLabel">Editar documento</h4>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body mx-3">
+		        <div class="md-form mb-5">
+		          <input type="text" name="title" id="titleU" class="form-control validate">
+		          <label data-error="Error" data-success="Bien" for="titleU">Titulo</label>
+		        </div>
+		        <div class="md-form mb-5">
+		          <input type="text" name="affair" id="affairU" class="form-control validate">
+		          <label data-error="Error" data-success="Bien" for="affairU">Asunto</label>
+		        </div>
+		        <div class="md-form mb-5">
+		          <input type="text" name="header" id="headerU" class="form-control validate">
+		          <label data-error="Error" data-success="Bien" for="headerU">Encabezado</label>
+		        </div>
+		        <div class="md-form mb-5">
+		          <input type="text" name="from" id="fromU" class="form-control validate">
+		          <label data-error="Error" data-success="Bien" for="fromU">De</label>
+		        </div>
+		        <div class="md-form mb-5">
+		          <input type="text" name="to" id="toU" class="form-control validate">
+		          <label data-error="Error" data-success="Bien" for="toU">Para</label>
+		        </div>
+		        <div class="md-form mb-5">
+		          <select type="text" name="document_type_id" id="document_type_idU" class="form-control validate">
+		          		<option selected disabled>Tipo de documento</option>
+		          		@foreach($tipos as $tipo)
+		          			<option value="{{ $tipo->id }}">{{ $tipo->name }}</option>
+		          		@endforeach
+		          </select>
+				</div>
+		        <div class="md-form mb-4">
+		          <textarea name="text" id="textU" class="form-control validate"></textarea>
+		          <label data-error="Error" data-success="Bien" for="textU">Texto</label>
+		        </div>
+		        <label data-error="Error" data-success="Bien" for="dateU">Fecha</label>
+		        <div class="md-form mb-4">
+		          <input  type="date" id="dateU" autofocus="true" name="date" class="form-control validate">
+		        </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+		        <button type="submit" id="bsubmit" class="btn btn-primary btn-sm">Guardar</button>
+		      </div>
+		    </div>
+		  </div>
+		</form>
+	</div>
+
+
+	@section('my-js')
+	<script>
+	$(document).ready(function(){
+		listar();
+		$('#my_form').submit(function(e) {
+			e.preventDefault();
+			guardar();
+		});
+	});
+
+	function guardar(){
+		let form = $('#my_form').serialize();
+		let url = '{{ Route('documentos.store') }}';
+		axios.post(url,form)
+	    .then(function(res) {
+	      if(res.status==200) {
+		    $('#createModal').modal('toggle');
+            alertify.success("agregado con exito!");
+	        let tabla = $('#tb').DataTable();
+		    tabla.ajax.reload( null, false );
+	        $('#name').val('');
+	      }
+	    })
+	    .catch(function(err) {
+	      alertify.error("error al guardar!");
+	    });
+	}
+
+	function listar(){
+		var tabla = $('#tb').DataTable({
+			"processing": 'true',
+			 "ajax": 'todos/documentos',
+			 "columns": [
+	            { "data": "id" },
+	            { "data": "title" },
+	            { "data": "from" },
+	            { "data": "to" },
+	            { "data": "affair" },
+	            { "data": "type" },
+	            { "data": "date" },
+	            { "data": null, render: function(data,type,row){
+	            	return `
+	            	<a href='#' onclick='editar("${data.id}")' data-toggle='modal' data-target='#updateModal' title='Editar' class='btn btn-warning btn-sm'>Editar</a>
+	            	<a href='#' onclick='eliminar("${data.id}")' title='Eliminar' class='btn btn-danger btn-sm'>Eliminar</a>`;
+	            }}
+	    	]
+		});
+	}
+
+	function editar(id){
+		let url = 'editar/documento/'+id;
+		axios.get(url).then(response=>{
+			$('#idU').val(response.data.id);
+			$('#titleU').val(response.data.title);
+	        $('#affairU').val(response.data.affair);
+	        $('#textU').val(response.data.text);
+	        $('#document_type_idU').val(response.data.document_type_id);
+	        $('#dateU').val(response.data.date);
+	        $('#fromU').val(response.data.from);
+	        $('#toU').val(response.data.to);
+	        $('#headerU').val(response.data.header);
+		});
+
+		$('#my_formU').submit(function(e) {
+			e.preventDefault();
+			actualizar(id);
+		});
+	}
+
+	function actualizar(id){
+		let url = 'actualizar/documento/'+id;
+		let form = $('#my_formU').serialize();
+		axios.put(url,form).then(response=>{
+		    $('#updateModal').modal('toggle');
+	        $('#titleU').val('');
+	        $('#affairU').val('');
+	        $('#textU').val('');
+	        $('#document_type_idU').val('');
+	        $('#dateU').val('');
+	        $('#fromU').val('');
+	        $('#toU').val('');
+	        $('#headerU').val('');
+            alertify.success("editado con exito!");
+			
+		let tabla = $('#tb').DataTable();
+		    tabla.ajax.reload( null, false );
+		});
+
+	}
+
+	function eliminar(id){
+		let url = 'eliminar/documento/'+id;
+		axios.delete(url).then(response=>{
+			alertify.success("eliminado con exito!");
+			let tabla = $('#tb').DataTable();
+		    tabla.ajax.reload( null, false );
+		});
+	}
+	</script>
+	@stop
 @stop

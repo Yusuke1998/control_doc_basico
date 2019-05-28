@@ -49,7 +49,7 @@
 
         <!-- Brand -->
         <a class="navbar-brand waves-effect" href="{{ URL('/') }}">
-          <small><strong class="blue-text">CtrlSegDocs</strong></small>
+          <small><strong class="blue-text">CSD</strong></small>
         </a>
 
         <!-- Collapse -->
@@ -181,6 +181,8 @@
   <script type="text/javascript" src="{{asset('mdb/js/bootstrap.min.js')}}"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="{{asset('mdb/js/mdb.min.js')}}"></script>
+  <!-- Axios -->
+  <script type="text/javascript" src="{{asset('js/axios.min.js')}}"></script>
   <!-- MDBootstrap Datatables  -->
   <script type="text/javascript" src="{{asset('DataTables/datatables.js')}}"></script>
   <!-- alertify  -->
@@ -192,11 +194,11 @@
     new WOW().init();
   </script>
 
-  <script type="text/javascript">
+  {{-- <script type="text/javascript">
     $(document).ready(function() {
         var table = $('#tb').DataTable();
     });
-  </script>
+  </script> --}}
 
   @yield('my-js')
 

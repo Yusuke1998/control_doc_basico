@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     protected $fillable = [
-        'title','header','text','from','to','file','affair','person_id','document_type_id','date','user_id'
+        'title','header','text','from','to','file','affair','person_id','document_type_id','date','user_id','code'
     ];
 
     public function document_type(){

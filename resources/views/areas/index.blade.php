@@ -111,7 +111,11 @@
 	<!-- Central Modal Update -->
 
 	@section('my-js')
-
+	<script type="text/javascript">
+	    $(document).ready(function() {
+	        var table = $('#tb').DataTable();
+	    });
+	</script>
 	<script>
 
 		$('#bsubmit').on('click', function(e){

@@ -76,16 +76,32 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 
 	// documentos
 	Route::resource('documentos','DocumentController');
-	Route::post('editar/{id}','DocumentController@editar')->name('documentos.editar');
-	Route::get('ver/{id}','DocumentController@show')->name('documentos.ver');
-	Route::post('eliminar/{id}','DocumentController@destroy')->name('documentos.eliminar');
+
+    Route::get('todos/documentos','DocumentController@all')->name('documentos.all');
+
+	Route::get('ver/documento/{id}','DocumentController@show')->name('documentos.ver');
+
+	Route::get('editar/documento/{id}','DocumentController@editar')->name('documentos.editar');
+
+	Route::put('actualizar/documento/{id}','DocumentController@update')->name('documentos.actualizar');
+	
+	Route::delete('eliminar/documento/{id}','DocumentController@destroy')->name('documentos.eliminar');
+    
     Route::post('cantidad','DocumentController@cantidad')->name('documentos.cantidad');
-    Route::get('tipo/documento','DocumentTypeController@index')->name('tipos.index');
-    Route::post('nuevo/tipo/documento','DocumentTypeController@store')->name('tipos.crear');
-    Route::post('eliminar/tipo/documento/{id}','DocumentTypeController@destroy')->name('tipos.eliminar');
-    Route::post('editar/tipo/documento/{id}','DocumentTypeController@edit')->name('tipos.editar');
-    Route::post('actualizar/tipo/documento/{id}','DocumentTypeController@update')->name('tipos.actualizar');
 	// documentos
+    
+	// documentos tipos
+    Route::get('tipo/documento','DocumentTypeController@index')->name('tipos.index');
+    
+    Route::post('nuevo/tipo/documento','DocumentTypeController@store')->name('tipos.crear');
+    
+    Route::post('eliminar/tipo/documento/{id}','DocumentTypeController@destroy')->name('tipos.eliminar');
+    
+    Route::post('editar/tipo/documento/{id}','DocumentTypeController@edit')->name('tipos.editar');
+    
+    Route::post('actualizar/tipo/documento/{id}','DocumentTypeController@update')->name('tipos.actualizar');
+	// documentos tipos
+
 
 	// Entradas y salidas por documento
 	Route::get('documentos/entradas/{id}','DocumentController@entradas')->name('documentos.entradas');

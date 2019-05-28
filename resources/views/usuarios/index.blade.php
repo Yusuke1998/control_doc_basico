@@ -8,7 +8,7 @@
         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createModal">Nuevo</button>
     </div>
     <div id="all-users" class="col-md-12">
-    <table id="user_table" class="table table-striped table-bordered">
+    <table id="tb" class="table table-striped table-bordered">
 		  <thead class="black white-text">
 		    <tr>
 		      <th scope="col">#</th>
@@ -82,6 +82,11 @@
   </div>
 </div>
 @section('my-js')
+<script type="text/javascript">
+    $(document).ready(function() {
+        var table = $('#tb').DataTable();
+    });
+</script>
 <script>
 
 $('#esubmit').on('click', function(e){

@@ -10,6 +10,7 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code')->nullable(); #codigo
             $table->string('title')->nullable(); #titulo
             $table->string('header')->nullable(); #encabezado
             $table->string('from')->nullable(); #de
@@ -18,8 +19,9 @@ class CreateDocumentsTable extends Migration
             $table->date('date')->nullable(); #fecha
             $table->text('text')->nullable(); #texto
             $table->string('file')->nullable(); #archivo
-            $table->integer('document_type_id')->unsigned(); #tipo
-            $table->integer('person_id')->unsigned(); #persona_id
+            $table->integer('document_type_id')->unsigned()->nullable(); #tipo
+            $table->integer('person_id')->unsigned()->nullable(); #persona_id
+
             $table->foreign('person_id')->references('id')->on('people')->onDelete('cascade');
             $table->integer('user_id')->unsigned(); #usuario_id
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

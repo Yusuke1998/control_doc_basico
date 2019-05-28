@@ -76,6 +76,8 @@
   <script type="text/javascript" src="{{asset('mdb/js/popper.min.js')}}"></script>
   <!-- Bootstrap core JavaScript -->
   <script type="text/javascript" src="{{asset('mdb/js/bootstrap.min.js')}}"></script>
+  <!-- Axios -->
+  <script type="text/javascript" src="{{asset('js/axios.min.js')}}"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="{{asset('mdb/js/mdb.min.js')}}"></script>
   <!-- alertify  -->
