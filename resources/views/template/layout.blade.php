@@ -70,6 +70,9 @@
             <li class="nav-item {{ (request()->is('documentos/documentos'))?'active':'' }}">
               <a class="nav-link waves-effect" href="{{ URL('/documentos/documentos') }}">DOCUMENTOS</a>
             </li>
+            <li class="nav-item {{ (request()->is('documentos/archivos'))?'active':'' }}">
+              <a class="nav-link waves-effect" href="{{ URL('/documentos/archivos') }}">ARCHIVOS</a>
+            </li>
             <li class="nav-item {{ (request()->is('documentos/areas'))?'active':'' }}">
               <a class="nav-link waves-effect" href="{{ URL('/documentos/areas') }}">AREAS</a>
             </li>
@@ -132,6 +135,9 @@
         </a>
         <a href="" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-table mr-3"></i>DOCUMENTOS</a>
+
+        <a href="" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-table mr-3"></i>ARCHIVOS</a>
 
         <a href="" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-table mr-3"></i>AREAS</a>

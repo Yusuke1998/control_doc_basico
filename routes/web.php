@@ -45,14 +45,14 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	Route::resource('entradas','EntranceController');
 	Route::get('entradas/ver/{id}','EntranceController@ver')->name('entradas.ver');
 	Route::post('entradas/editar/{id}','EntranceController@editar')->name('entradas.editar');
-    Route::post('entradas/cantidad','EntranceController@cantidad')->name('entradas.cantidad');
+    Route::get('entradas/cantidad','EntranceController@cantidad')->name('entradas.cantidad');
 	// ENTRADAS
 
 	// SALIDAS
 	Route::resource('salidas','DeliveryController');
 	Route::get('salidas/ver/{id}','DeliveryController@ver')->name('salidas.ver');
     Route::post('salidas/editar/{id}','DeliveryController@editar')->name('salidas.editar');
-    Route::post('salidas/cantidad','DeliveryController@cantidad')->name('salidas.cantidad');
+    Route::get('salidas/cantidad','DeliveryController@cantidad')->name('salidas.cantidad');
 	// SALIDAS
 
     // GRAFICAS
@@ -65,13 +65,13 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	// USUARIOS
 	Route::resource('usuarios','UsersController');
 	Route::post('editar/{id}','UsersController@editar')->name('user.editar');
-    Route::post('cantidad','UsersController@cantidad')->name('user.cantidad');
+    Route::get('cantidad/usuarios','UsersController@cantidad')->name('user.cantidad');
 	// USUARIOS
 
 	// PERSONAS
 	Route::resource('personas','PersonController');
 	Route::post('editar/{id}','PersonController@editar')->name('person.editar');
-    Route::post('cantidad','PersonController@cantidad')->name('person.cantidad');
+    Route::get('cantidad/personas','PersonController@cantidad')->name('person.cantidad');
 	// PERSONAS
 
 	// documentos
@@ -87,8 +87,12 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	
 	Route::delete('eliminar/documento/{id}','DocumentController@destroy')->name('documentos.eliminar');
     
-    Route::post('cantidad','DocumentController@cantidad')->name('documentos.cantidad');
+    Route::get('cantidad/documentos','DocumentController@cantidad')->name('documentos.cantidad');
 	// documentos
+
+	// Archivos
+	Route::resource('archivos','FileController');
+	// Archivos
     
 	// documentos tipos
     Route::get('tipo/documento','DocumentTypeController@index')->name('tipos.index');

@@ -26,6 +26,10 @@ class User extends Authenticatable
         return $this->hasMany(Document::class);
     }
 
+    public function files(){
+        return $this->hasMany(File::class);
+    }
+
     public function person(){
         return $this->belongsTo(Person::class);
     }

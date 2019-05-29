@@ -11,12 +11,12 @@ class CreatePeopleTable extends Migration
         Schema::create('people', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ci')->unique();
-            $table->string('type_ci');
-            $table->string('firstname');
-            $table->string('lastname');
+            $table->string('type_ci')->nullable();
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
-            $table->string('cargo')->nullable();
+            $table->string('position')->nullable();
             $table->timestamps();
         });
     }

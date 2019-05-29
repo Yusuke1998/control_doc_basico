@@ -11,16 +11,23 @@
 					<thead class="black white-text">
 						<tr>
 							<th>#</th>
-							<th>Cedula</th>
 							<th>Titulo</th>
-							<th>De</th>
-							<th>Para</th>
 							<th>Asunto</th>
 							<th>Tipo de documento</th>
 							<th>Fecha</th>
 							<th>Accion</th>
 						</tr>
 					</thead>
+					<tbody>
+						<tr>
+							<td>data</td>
+							<td>data</td>
+							<td>data</td>
+							<td>data</td>
+							<td>data</td>
+							<td>data</td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -36,16 +43,12 @@
 		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h4 class="modal-title w-100" id="myModalLabel">Nuevo documento</h4>
+		        <h4 class="modal-title w-100" id="myModalLabel">Nuevo archivo</h4>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
 		      <div class="modal-body mx-3">
-		        <div class="md-form mb-5">
-		          <input type="text" name="ci" id="ci" class="form-control validate">
-		          <label data-error="Error" data-success="Bien" for="toU">Cedula</label>
-		        </div>
 		        <div class="md-form mb-5">
 		          <input type="text" name="title" id="title" class="form-control validate">
 		          <label data-error="Error" data-success="Bien" for="title">Titulo</label>
@@ -55,18 +58,6 @@
 		          <label data-error="Error" data-success="Bien" for="affair">Asunto</label>
 		        </div>
 		        <div class="md-form mb-5">
-		          <input type="text" name="header" id="header" class="form-control validate">
-		          <label data-error="Error" data-success="Bien" for="header">Encabezado</label>
-		        </div>
-		        <div class="md-form mb-5">
-		          <input type="text" name="from" id="from" class="form-control validate">
-		          <label data-error="Error" data-success="Bien" for="from">De</label>
-		        </div>
-		        <div class="md-form mb-5">
-		          <input type="text" name="to" id="to" class="form-control validate">
-		          <label data-error="Error" data-success="Bien" for="to">Para</label>
-		        </div>
-		        <div class="md-form mb-5">
 		          <select type="text" name="document_type_id" id="document_type_id" class="form-control validate">
 		          		<option selected disabled>Tipo de documento</option>
 		          		@foreach($tipos as $tipo)
@@ -74,10 +65,6 @@
 		          		@endforeach
 		          </select>
 				</div>
-		        <div class="md-form mb-4">
-		          <textarea name="text" id="text" class="form-control validate"></textarea>
-		          <label data-error="Error" data-success="Bien" for="text">Texto</label>
-		        </div>
 		        <label data-error="Error" data-success="Bien" for="fechaC">Fecha</label>
 		        <div class="md-form mb-4">
 		          <input  type="date" id="fechaC" autofocus="true" name="date" class="form-control validate">
@@ -89,7 +76,7 @@
 				  <div class="custom-file">
 				    <input type="file" name="file" class="custom-file-input" id="file"
 				      aria-describedby="inputGroupFileAddon01">
-				    <label class="custom-file-label" for="file">Selecciona el archivo</label>
+				    <label class="custom-file-label" for="fileU">Selecciona el archivo</label>
 				  </div>
 				</div>
 		      </div>
@@ -111,16 +98,12 @@
 		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h4 class="modal-title w-100" id="myModalLabel">Editar documento</h4>
+		        <h4 class="modal-title w-100" id="myModalLabel">Editar archivo</h4>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
 		      <div class="modal-body mx-3">
-		        <div class="md-form mb-5">
-		          <input type="text" name="ci" id="ciU" class="form-control validate">
-		          <label data-error="Error" data-success="Bien" for="toU">Cedula</label>
-		        </div>
 		        <div class="md-form mb-5">
 		          <input type="text" name="title" id="titleU" class="form-control validate">
 		          <label data-error="Error" data-success="Bien" for="titleU">Titulo</label>
@@ -130,18 +113,6 @@
 		          <label data-error="Error" data-success="Bien" for="affairU">Asunto</label>
 		        </div>
 		        <div class="md-form mb-5">
-		          <input type="text" name="header" id="headerU" class="form-control validate">
-		          <label data-error="Error" data-success="Bien" for="headerU">Encabezado</label>
-		        </div>
-		        <div class="md-form mb-5">
-		          <input type="text" name="from" id="fromU" class="form-control validate">
-		          <label data-error="Error" data-success="Bien" for="fromU">De</label>
-		        </div>
-		        <div class="md-form mb-5">
-		          <input type="text" name="to" id="toU" class="form-control validate">
-		          <label data-error="Error" data-success="Bien" for="toU">Para</label>
-		        </div>
-		        <div class="md-form mb-5">
 		          <select type="text" name="document_type_id" id="document_type_idU" class="form-control validate">
 		          		<option selected disabled>Tipo de documento</option>
 		          		@foreach($tipos as $tipo)
@@ -149,10 +120,6 @@
 		          		@endforeach
 		          </select>
 				</div>
-		        <div class="md-form mb-4">
-		          <textarea name="text" id="textU" class="form-control validate"></textarea>
-		          <label data-error="Error" data-success="Bien" for="textU">Texto</label>
-		        </div>
 		        <label data-error="Error" data-success="Bien" for="dateU">Fecha</label>
 		        <div class="md-form mb-4">
 		          <input  type="date" id="dateU" autofocus="true" name="date" class="form-control validate">
@@ -180,104 +147,9 @@
 
 	@section('my-js')
 	<script>
-	$(document).ready(function(){
-		listar();
-		$('#my_form').submit(function(e) {
-			e.preventDefault();
-			guardar();
+		$(document).ready(function(){
+			alert('Hola mundo!');
 		});
-	});
-
-	function guardar(){
-		let form = $('#my_form').serialize();
-		let url = '{{ Route('documentos.store') }}';
-		axios.post(url,form)
-	    .then(function(res) {
-	      if(res.status==200) {
-		    $('#createModal').modal('toggle');
-            alertify.success("agregado con exito!");
-	        let tabla = $('#tb').DataTable();
-		    tabla.ajax.reload( null, false );
-	        $('#name').val('');
-	      }
-	    })
-	    .catch(function(err) {
-	      alertify.error("error al guardar!");
-	    });
-	}
-
-	function listar(){
-		var tabla = $('#tb').DataTable({
-			"processing": 'true',
-			 "ajax": 'todos/documentos',
-			 "columns": [
-	            { "data": "id" },
-	            { "data": "ci" },
-	            { "data": "title" },
-	            { "data": "from" },
-	            { "data": "to" },
-	            { "data": "affair" },
-	            { "data": "type" },
-	            { "data": "date" },
-	            { "data": null, render: function(data,type,row){
-	            	return `
-	            	<a target="_blank" href='ver/documento/${data.id}' title='Ver' class='btn btn-info btn-sm'>Ver</a>
-	            	<a href='#' onclick='editar("${data.id}")' data-toggle='modal' data-target='#updateModal' title='Editar' class='btn btn-warning btn-sm'>Editar</a>
-	            	<a href='#' onclick='eliminar("${data.id}")' title='Eliminar' class='btn btn-danger btn-sm'>Eliminar</a>`;
-	            }}
-	    	]
-		});
-	}
-
-	function editar(id){
-		let url = 'editar/documento/'+id;
-		axios.get(url).then(response=>{
-			$('#idU').val(response.data.id);
-			$('#titleU').val(response.data.title);
-	        $('#affairU').val(response.data.affair);
-	        $('#textU').val(response.data.text);
-	        $('#document_type_idU').val(response.data.document_type_id);
-	        $('#dateU').val(response.data.date);
-	        $('#fromU').val(response.data.from);
-	        $('#toU').val(response.data.to);
-	        $('#headerU').val(response.data.header);
-		});
-
-		$('#my_formU').submit(function(e) {
-			e.preventDefault();
-			actualizar(id);
-		});
-	}
-
-	function actualizar(id){
-		let url = 'actualizar/documento/'+id;
-		let form = $('#my_formU').serialize();
-		axios.put(url,form).then(response=>{
-		    $('#updateModal').modal('toggle');
-	        $('#titleU').val('');
-	        $('#affairU').val('');
-	        $('#textU').val('');
-	        $('#document_type_idU').val('');
-	        $('#dateU').val('');
-	        $('#fromU').val('');
-	        $('#toU').val('');
-	        $('#headerU').val('');
-            alertify.success("editado con exito!");
-			
-		let tabla = $('#tb').DataTable();
-		    tabla.ajax.reload( null, false );
-		});
-
-	}
-
-	function eliminar(id){
-		let url = 'eliminar/documento/'+id;
-		axios.delete(url).then(response=>{
-			alertify.success("eliminado con exito!");
-			let tabla = $('#tb').DataTable();
-		    tabla.ajax.reload( null, false );
-		});
-	}
 	</script>
 	@stop
 @stop
