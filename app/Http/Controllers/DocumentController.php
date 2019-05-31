@@ -182,6 +182,7 @@ class DocumentController extends Controller
                     $documento->save();
                 }
             }else{
+                \File::delete($path."\\".$archivo->file);
                 $archivo->update(
                 [
                     'code'               =>  $documento->code,
