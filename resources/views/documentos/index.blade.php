@@ -44,7 +44,7 @@
 		      <div class="modal-body mx-3">
 		        <div class="md-form mb-5">
 		          <input type="text" name="ci" id="ci" class="form-control validate">
-		          <label data-error="Error" data-success="Bien" for="toU">Cedula</label>
+		          <label data-error="Error" data-success="Bien" for="ci">Cedula</label>
 		        </div>
 		        <div class="md-form mb-5">
 		          <input type="text" name="title" id="title" class="form-control validate">
@@ -78,9 +78,9 @@
 		          <textarea name="text" id="text" class="form-control validate"></textarea>
 		          <label data-error="Error" data-success="Bien" for="text">Texto</label>
 		        </div>
-		        <label data-error="Error" data-success="Bien" for="fechaC">Fecha</label>
+		        <label data-error="Error" data-success="Bien" for="date">Fecha</label>
 		        <div class="md-form mb-4">
-		          <input  type="date" id="fechaC" autofocus="true" name="date" class="form-control validate">
+		          <input  type="date" id="date" autofocus="true" name="date" class="form-control validate">
 		        </div>
 		        <div class="input-group">
 				  <div class="input-group-prepend">
@@ -119,7 +119,7 @@
 		      <div class="modal-body mx-3">
 		        <div class="md-form mb-5">
 		          <input type="text" name="ci" id="ciU" class="form-control validate">
-		          <label data-error="Error" data-success="Bien" for="toU">Cedula</label>
+		          <label data-error="Error" data-success="Bien" for="ciU">Cedula</label>
 		        </div>
 		        <div class="md-form mb-5">
 		          <input type="text" name="title" id="titleU" class="form-control validate">
@@ -189,9 +189,10 @@
 	});
 
 	function guardar(){
-		let form = $('#my_form').serialize();
+		var formData = new FormData(document.getElementById("my_form"));
+		formData.append("dato", "valor");
 		let url = '{{ Route('documentos.store') }}';
-		axios.post(url,form)
+		axios.post(url,formData)
 	    .then(function(res) {
 	      if(res.status==200) {
 		    $('#createModal').modal('toggle');
@@ -233,6 +234,7 @@
 		let url = 'editar/documento/'+id;
 		axios.get(url).then(response=>{
 			$('#idU').val(response.data.id);
+			$('#ciU').val(response.data.ci);
 			$('#titleU').val(response.data.title);
 	        $('#affairU').val(response.data.affair);
 	        $('#textU').val(response.data.text);
@@ -250,10 +252,12 @@
 	}
 
 	function actualizar(id){
+		var formData = new FormData(document.getElementById("my_formU"));
+		formData.append("dato", "valor");
 		let url = 'actualizar/documento/'+id;
-		let form = $('#my_formU').serialize();
-		axios.put(url,form).then(response=>{
-		    $('#updateModal').modal('toggle');
+		axios.put(url,formData).then(response=>{
+	      if(response.status==200) {
+	        $('#ciU').val('');
 	        $('#titleU').val('');
 	        $('#affairU').val('');
 	        $('#textU').val('');
@@ -262,12 +266,13 @@
 	        $('#fromU').val('');
 	        $('#toU').val('');
 	        $('#headerU').val('');
-            alertify.success("editado con exito!");
-			
-		let tabla = $('#tb').DataTable();
+		    $('#updateModal').modal('toggle');
+			let tabla = $('#tb').DataTable();
 		    tabla.ajax.reload( null, false );
-		});
+            alertify.success("editado con exito!");
+	      }
 
+		});
 	}
 
 	function eliminar(id){

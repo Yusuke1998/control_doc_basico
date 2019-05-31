@@ -49,6 +49,7 @@ class DocumentController extends Controller
         $documento = Document::find($id);
         $data = [
             'code'               =>  $documento->code,
+            'ci'                 =>  $documento->person->ci,
             'title'              =>  $documento->title,
             'header'             =>  $documento->header,
             'text'               =>  $documento->text,
@@ -70,9 +71,13 @@ class DocumentController extends Controller
         $user_id = \Auth::User()->id;
         $code = time().'COD';
 
-        $persona = Person::create([
-            'ci'        =>  $request->ci,
-        ]);
+        $persona = Person::where('ci',$request->ci)->first();
+        
+        if (is_null($persona)) {
+            $persona = Person::create([
+                'ci'        =>  $request->ci,
+            ]);
+        }
 
         $documento = Document::create([
             'code'               =>  $code,
@@ -145,6 +150,17 @@ class DocumentController extends Controller
     public function update(Request $request, $id)
     {
         $user_id = \Auth::User()->id;
+
+        $persona = Person::where('ci',$request->ci)->first();
+        
+        if (is_null($persona)) {
+            $persona = Person::create([
+                'ci'        =>  $request->ci,
+            ]);
+        }
+
+        return Response()->json($request->all());
+
         $documento = Document::find($id)->update([
             'title'              =>  $request->title,
             'header'             =>  $request->header,

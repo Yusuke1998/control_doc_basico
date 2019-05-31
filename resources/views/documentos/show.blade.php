@@ -51,7 +51,7 @@
 				<!-- Button -->	
 				<a href="#" class="btn btn-primary btn-sm">PDF</a>
 				@if(isset($documento['file_id']) && !empty($documento['file_id']))
-				<a href="{{ route('archivos.show',$documento['file_id']) }}" title="Ir al archivo" class="btn btn-primary btn-sm">ARCHIVO</a>
+				<a href="{{ route('archivos.ver',$documento['file_id']) }}" title="Ir al archivo" class="btn btn-primary btn-sm">ARCHIVO</a>
 				@endif
 				<!-- Card -->
 			</div>

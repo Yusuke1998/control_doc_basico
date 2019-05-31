@@ -1,5 +1,5 @@
 @extends('template.layout')
-@section('title') Documentos @stop
+@section('title') Archivos @stop
 @section('content')
 	<div class="container">
 		<div class="row">
@@ -11,6 +11,7 @@
 					<thead class="black white-text">
 						<tr>
 							<th>#</th>
+							<th>Cedula</th>
 							<th>Titulo</th>
 							<th>Asunto</th>
 							<th>Tipo de documento</th>
@@ -18,16 +19,6 @@
 							<th>Accion</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-							<td>data</td>
-						</tr>
-					</tbody>
 				</table>
 			</div>
 		</div>
@@ -49,6 +40,14 @@
 		        </button>
 		      </div>
 		      <div class="modal-body mx-3">
+		      	<div class="md-form mb-5">
+		          <input type="text" name="ci" id="ci" class="form-control validate">
+		          <label data-error="Error" data-success="Bien" for="toU">Cedula</label>
+		        </div>
+		        <div class="md-form mb-5">
+		          <input type="text" name="code" id="code" class="form-control validate">
+		          <label data-error="Error" data-success="Bien" for="code">Codigo</label>
+		        </div>
 		        <div class="md-form mb-5">
 		          <input type="text" name="title" id="title" class="form-control validate">
 		          <label data-error="Error" data-success="Bien" for="title">Titulo</label>
@@ -104,6 +103,14 @@
 		        </button>
 		      </div>
 		      <div class="modal-body mx-3">
+		      	<div class="md-form mb-5">
+		          <input type="text" name="ci" id="ciU" class="form-control validate">
+		          <label data-error="Error" data-success="Bien" for="ciU">Cedula</label>
+		        </div>
+		        <div class="md-form mb-5">
+		          <input type="text" name="code" id="codeU" class="form-control validate">
+		          <label data-error="Error" data-success="Bien" for="codeU">Codigo</label>
+		        </div>
 		        <div class="md-form mb-5">
 		          <input type="text" name="title" id="titleU" class="form-control validate">
 		          <label data-error="Error" data-success="Bien" for="titleU">Titulo</label>
@@ -147,9 +154,109 @@
 
 	@section('my-js')
 	<script>
-		$(document).ready(function(){
-			alert('Hola mundo!');
+	$(document).ready(function(){
+		listar();
+		$('#my_form').submit(function(e) {
+			e.preventDefault();
+			guardar();
 		});
+	});
+
+	function guardar(){
+		var formData = new FormData(document.getElementById("my_form"));
+		formData.append("dato", "valor");
+		let url = '{{ Route('documentos.store') }}';
+		axios.post(url,formData)
+	    .then(function(res) {
+	      if(res.status==200) {
+		    $('#createModal').modal('toggle');
+            alertify.success("agregado con exito!");
+	        let tabla = $('#tb').DataTable();
+		    tabla.ajax.reload( null, false );
+	        $('#name').val('');
+	      }
+	    })
+	    .catch(function(err) {
+	      alertify.error("error al guardar!");
+	    });
+	}
+
+	function listar(){
+		var tabla = $('#tb').DataTable({
+			"processing": 'true',
+			 "ajax": 'todos/archivos',
+			 "columns": [
+	            { "data": "id" },
+	            { "data": "ci" },
+	            { "data": "title" },
+	            { "data": "affair" },
+	            { "data": "type" },
+	            { "data": "date" },
+	            { "data": null, render: function(data,type,row){
+	            	return `
+	            	<a target="_blank" href='ver/archivos/${data.id}' title='Ver' class='btn btn-info btn-sm'>Ver</a>
+	            	<a href='#' onclick='editar("${data.id}")' data-toggle='modal' data-target='#updateModal' title='Editar' class='btn btn-warning btn-sm'>Editar</a>
+	            	<a href='#' onclick='eliminar("${data.id}")' title='Eliminar' class='btn btn-danger btn-sm'>Eliminar</a>`;
+	            }}
+	    	]
+		});
+	}
+
+	function editar(id){
+		let url = 'editar/documento/'+id;
+		axios.get(url).then(response=>{
+			$('#idU').val(response.data.id);
+			$('#ciU').val(response.data.ci);
+			$('#codeU').val(response.data.code);
+			$('#titleU').val(response.data.title);
+	        $('#affairU').val(response.data.affair);
+	        $('#textU').val(response.data.text);
+	        $('#document_type_idU').val(response.data.document_type_id);
+	        $('#dateU').val(response.data.date);
+	        $('#fromU').val(response.data.from);
+	        $('#toU').val(response.data.to);
+	        $('#headerU').val(response.data.header);
+		});
+
+		$('#my_formU').submit(function(e) {
+			e.preventDefault();
+			var f = $(this);
+			actualizar(id);
+		});
+	}
+
+	function actualizar(id){
+		var formData = new FormData(document.getElementById("my_formU"));
+		formData.append("dato", "valor");
+		let url = 'actualizar/documento/'+id;
+		axios.put(url,formData).then(response=>{
+		    $('#updateModal').modal('toggle');
+	        $('#ciU').val('');
+	        $('#codeU').val('');
+	        $('#titleU').val('');
+	        $('#affairU').val('');
+	        $('#textU').val('');
+	        $('#document_type_idU').val('');
+	        $('#dateU').val('');
+	        $('#fromU').val('');
+	        $('#toU').val('');
+	        $('#headerU').val('');
+            alertify.success("editado con exito!");
+			
+		let tabla = $('#tb').DataTable();
+		    tabla.ajax.reload( null, false );
+		});
+
+	}
+
+	function eliminar(id){
+		let url = 'eliminar/documento/'+id;
+		axios.delete(url).then(response=>{
+			alertify.success("eliminado con exito!");
+			let tabla = $('#tb').DataTable();
+		    tabla.ajax.reload( null, false );
+		});
+	}
 	</script>
 	@stop
 @stop
