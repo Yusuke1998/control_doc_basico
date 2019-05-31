@@ -152,7 +152,16 @@ class FileController extends Controller
     }
 
     public function descargar($id){
-        return $id;
+        $archivo = File::find($id);
+        $patch = public_path('archivos\\');
+        $file = $archivo->file;
+        $true = file_exists($patch.$file);
+        if ($true) {
+            return response()->download($patch.$file);
+        }else{
+            return back()->with('info','No existe el archivo!');
+        }
+
     }
 
     public function destroy($id)
