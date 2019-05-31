@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Document;
+use App\File;
 use App\Entrance;
 use App\Delivery;
 
@@ -33,10 +34,11 @@ class ChartsController extends Controller
     public function charts()
     {
         $documentos     = Document::all()->count();
+        $archivos       = File::all()->count();
         $entradas       = Entrance::all()->count();
         $salidas        = Delivery::all()->count();
 
-        $data = [$documentos,$entradas,$salidas];
+        $data = [$documentos,$archivos,$entradas,$salidas];
 
         return Response()->json($data);
     }

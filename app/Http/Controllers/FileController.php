@@ -85,9 +85,21 @@ class FileController extends Controller
         ]);
     }
 
-    public function show(File $file)
+    public function show($id)
     {
-        return  $file->all();
+        $archivo = File::find($id);
+        $archivo = [
+            'id'      => $archivo->id,
+            'code'      => $archivo->code,
+            'title'     => $archivo->title,
+            'affair'    => $archivo->affair,
+            'date'      => date('d/m/Y',strtotime($archivo->date)),
+            'person'    => $archivo->person->firstname.' '.$archivo->person->lastname,
+            'user'      => $archivo->user->person->firstname.' '.$archivo->user->person->lastname,
+            'ci'        => $archivo->person->ci,
+            'file'      => $archivo->file,
+        ];
+        return view('archivos.show',compact('archivo'));
     }
 
     public function update(Request $request, $id)
@@ -124,6 +136,10 @@ class FileController extends Controller
             'date'              =>  Carbon::now(),
         ]);
         return json_encode($request);
+    }
+
+    public function descargar($id){
+        return $id;
     }
 
     public function destroy($id)

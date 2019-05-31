@@ -92,7 +92,7 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	Route::post('actualizar/archivo/{id}','FileController@update')->name('archivos.actualizar');
 	Route::delete('eliminar/archivo/{id}','FileController@destroy')->name('archivos.eliminar');
     Route::get('cantidad/archivos','FileController@cantidad')->name('archivos.cantidad');
-
+    Route::get('descargar/archivo/{id}','FileController@descargar')->name('archivos.descargar');
 	// Archivos
     
 	// documentos tipos

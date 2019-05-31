@@ -27,6 +27,9 @@
                   <a href="{{ route('documentos.index') }}" class="list-group-item list-group-item-action waves-effect">Documentos
                     <span id="documentos" class="float-right badge badge-warning badge-pill pull-right"></span>
                   </a>
+                  <a href="{{ route('archivos.index') }}" class="list-group-item list-group-item-action waves-effect">Archivos
+                    <span id="archivos" class="float-right badge badge-warning badge-pill pull-right"></span>
+                  </a>
                   <a href="{{ route('entradas.index') }}" class="list-group-item list-group-item-action waves-effect">Entradas
                     <span id="entradas" class="float-right badge badge-primary badge-pill pull-right"></span>
                   </a>
@@ -154,16 +157,18 @@
 	    var myChart = new Chart(ctx, {
 	      type: 'bar',
 	      data: {
-	        labels: ["Documentos", "Entradas", "Salidas"],
+	        labels: ["Documentos", "archivos", "Entradas", "Salidas"],
 	        datasets: [{
 	          label: 'Estadisticas generales',
 	          data: data,
 	          backgroundColor: [
+              'rgba(255, 206, 86, 0.2)',
 	            'rgba(255, 206, 86, 0.2)',
 	            'rgba(54, 162, 235, 0.2)',
 	            'rgba(255,99,132, 0.2)',
 	          ],
 	          borderColor: [
+              'rgba(255, 206, 86,1)',
 	            'rgba(255, 206, 86,1)',
 	            'rgba(54, 162, 235, 1)',
 	            'rgba(255, 99, 132, 1)',
@@ -205,10 +210,10 @@
                 var myPieChart = new Chart(ctxP, {
                   type: 'pie',
                   data: {
-                    labels: ["Documentos", "Entradas", "Salidas"],
+                    labels: ["Documentos", "Archivos", "Entradas", "Salidas"],
                     datasets: [{
                       data: data,
-                      backgroundColor: ["#ffcc00", "#4285f4", "#ff3547"],
+                      backgroundColor: ["#ffcc00", "#ffcc00", "#4285f4", "#ff3547"],
                       hoverBackgroundColor: ["#ffaa00", "#4265f4", "#ff3560"]
                     }]
                   },
@@ -235,8 +240,9 @@
                   success: function(data) {
                     console.log(data);
                     $('#documentos').text(data[0]);
-                    $('#entradas').text(data[1]);
-                    $('#salidas').text(data[2]);
+                    $('#archivos').text(data[1]);
+                    $('#entradas').text(data[2]);
+                    $('#salidas').text(data[3]);
               },
                   error: function(data) {
                       var errors = data.responseJSON;
