@@ -30,9 +30,7 @@
 	<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	  aria-hidden="true">
 		<form action="" method="post" id="my_form" enctype="multipart/form-data">
-		{{-- enctype='multipart/form-data' --}}
 		{{ csrf_field() }}
-		  <!-- Change class .modal-sm to change the size of the modal -->
 		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -105,9 +103,7 @@
 	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	  aria-hidden="true">
 		<form action="" method="post" id="my_formU" enctype="multipart/form-data">
-		{{-- enctype='multipart/form-data' --}}
 		{{ csrf_field() }}
-		  <!-- Change class .modal-sm to change the size of the modal -->
 		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -170,7 +166,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
-		        <button type="submit" id="bsubmit" class="btn btn-primary btn-sm">Guardar</button>
+		        <button type="submit" id="bsubmit" class="btn btn-primary btn-sm">Actualizar</button>
 		      </div>
 		    </div>
 		  </div>
@@ -234,14 +230,22 @@
 		let url = 'editar/documento/'+id;
 		axios.get(url).then(response=>{
 			$('#idU').val(response.data.id);
-			$('#ciU').val(response.data.ci);
-			$('#titleU').val(response.data.title);
-	        $('#affairU').val(response.data.affair);
-	        $('#textU').val(response.data.text);
 	        $('#document_type_idU').val(response.data.document_type_id);
 	        $('#dateU').val(response.data.date);
+
+			$('#ciU').focus();
+			$('#ciU').val(response.data.ci);
+			$('#titleU').focus();
+			$('#titleU').val(response.data.title);
+			$('#affairU').focus();
+	        $('#affairU').val(response.data.affair);
+			$('#textU').focus();
+	        $('#textU').val(response.data.text);
+			$('#fromU').focus();
 	        $('#fromU').val(response.data.from);
+			$('#toU').focus();
 	        $('#toU').val(response.data.to);
+			$('#headerU').focus();
 	        $('#headerU').val(response.data.header);
 		});
 
@@ -255,7 +259,8 @@
 		var formData = new FormData(document.getElementById("my_formU"));
 		formData.append("dato", "valor");
 		let url = 'actualizar/documento/'+id;
-		axios.put(url,formData).then(response=>{
+		axios.post(url,formData)
+		.then(function(response){
 	      if(response.status==200) {
 	        $('#ciU').val('');
 	        $('#titleU').val('');

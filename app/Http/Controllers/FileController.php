@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
 use App\File;
+use App\Person;
+use App\Document;
+use App\Binnacle;
 use App\Document_type;
 use Illuminate\Http\Request;
 
@@ -27,6 +30,27 @@ class FileController extends Controller
         return $archivos;
     }
 
+    public function cantidad(){
+        $archivos = File::all()->count();
+        return $archivos;
+    }
+
+    public function editar($id){
+        $archivo = File::find($id);
+        $data = [
+            'ci'                 =>  $archivo->person->ci,
+            'code'               =>  $archivo->code,
+            'title'              =>  $archivo->title,
+            'affair'             =>  $archivo->affair,
+            'date'               =>  $archivo->date,
+            'person_id'          =>  $archivo->person_id,
+            'user_id'            =>  $archivo->user_id,
+            'document_type_id'   =>  $archivo->document_type_id,
+        ];
+
+        return Response()->json($data);
+    }
+
     public function store(Request $request)
     {
         $user_id = \Auth::User()->id;
@@ -42,7 +66,7 @@ class FileController extends Controller
             $file->move($path,$name_file);
 
             $archivo = File::create([
-                'code'               =>  $code,
+                'code'               =>  $request->code,
                 'title'              =>  $request->title,
                 'file'               =>  $name_file,
                 'affair'             =>  $request->affair,
@@ -66,18 +90,54 @@ class FileController extends Controller
         return  $file->all();
     }
 
-    public function edit(File $file)
+    public function update(Request $request, $id)
     {
-        //
+        $user_id = \Auth::User()->id;
+        $persona = Person::where('ci',$request->ci)->first();
+        if (is_null($persona)) {
+            $persona = Person::create([
+                'ci'        =>  $request->ci
+            ]);
+        }
+        if ($request->file('file')) {
+            $file = $request->file('file');
+            $name_file = time().'.'.$file->getClientOriginalExtension();
+            $path = public_path().'\archivos';
+            $file->move($path,$name_file);
+        }
+        $archivo = File::find($id)->update([
+            'code'               =>  $request->code,
+            'title'              =>  $request->title,
+            'file'               =>  isset($name_file)?$name_file:'',
+            'affair'             =>  $request->affair,
+            'date'               =>  $request->date,
+            'person_id'          =>  $persona->id,
+            'user_id'            =>  $user_id,
+            'document_type_id'   =>  $request->document_type_id,
+        ]);
+        $archivo = File::find($id);
+        $bitacora = Binnacle::create([
+            'user_id'           => \Auth::User()->id,
+            'action'            =>  'Editar',
+            'description'       =>  'Edicion de archivo '.$archivo->title.' con exito!',
+            'small_description' =>  'Edicion de archivo',
+            'date'              =>  Carbon::now(),
+        ]);
+        return json_encode($request);
     }
 
-    public function update(Request $request, File $file)
+    public function destroy($id)
     {
-        //
-    }
+        $archivo = File::find($id);
+        $name = $archivo->name;
+        $archivo->delete();
 
-    public function destroy(File $file)
-    {
-        //
+        $bitacora = Binnacle::create([
+            'user_id'           => \Auth::User()->id,
+            'action'            =>  'Eliminar',
+            'description'       =>  'archivo '.$name.' eliminado exitosamente!',
+            'date'              =>  Carbon::now(),
+        ]);
+        return Response()->json(['info'=>'Eliminado con exito!']);
     }
 }

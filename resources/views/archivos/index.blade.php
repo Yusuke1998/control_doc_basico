@@ -28,9 +28,7 @@
 	<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	  aria-hidden="true">
 		<form action="" method="post" id="my_form" enctype="multipart/form-data">
-		{{-- enctype='multipart/form-data' --}}
 		{{ csrf_field() }}
-		  <!-- Change class .modal-sm to change the size of the modal -->
 		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -91,9 +89,7 @@
 	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	  aria-hidden="true">
 		<form action="" method="post" id="my_formU" enctype="multipart/form-data">
-		{{-- enctype='multipart/form-data' --}}
 		{{ csrf_field() }}
-		  <!-- Change class .modal-sm to change the size of the modal -->
 		  <div class="modal-dialog modal-lg" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -144,7 +140,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
-		        <button type="submit" id="bsubmit" class="btn btn-primary btn-sm">Guardar</button>
+		        <button type="submit" id="bsubmit" class="btn btn-primary btn-sm">Actualizar</button>
 		      </div>
 		    </div>
 		  </div>
@@ -165,7 +161,7 @@
 	function guardar(){
 		var formData = new FormData(document.getElementById("my_form"));
 		formData.append("dato", "valor");
-		let url = '{{ Route('documentos.store') }}';
+		let url = '{{ Route('archivos.store') }}';
 		axios.post(url,formData)
 	    .then(function(res) {
 	      if(res.status==200) {
@@ -194,7 +190,7 @@
 	            { "data": "date" },
 	            { "data": null, render: function(data,type,row){
 	            	return `
-	            	<a target="_blank" href='ver/archivos/${data.id}' title='Ver' class='btn btn-info btn-sm'>Ver</a>
+	            	<a target="_blank" href='ver/archivo/${data.id}' title='Ver' class='btn btn-info btn-sm'>Ver</a>
 	            	<a href='#' onclick='editar("${data.id}")' data-toggle='modal' data-target='#updateModal' title='Editar' class='btn btn-warning btn-sm'>Editar</a>
 	            	<a href='#' onclick='eliminar("${data.id}")' title='Eliminar' class='btn btn-danger btn-sm'>Eliminar</a>`;
 	            }}
@@ -203,33 +199,33 @@
 	}
 
 	function editar(id){
-		let url = 'editar/documento/'+id;
+		let url = 'editar/archivo/'+id;
 		axios.get(url).then(response=>{
-			$('#idU').val(response.data.id);
+			$('#ciU').focus();
 			$('#ciU').val(response.data.ci);
-			$('#codeU').val(response.data.code);
+			$('#codeU').focus();
+			$('#codeU').click().val(response.data.code);
+			$('#titleU').focus();
 			$('#titleU').val(response.data.title);
+			$('#affairU').focus();
 	        $('#affairU').val(response.data.affair);
-	        $('#textU').val(response.data.text);
+			$('#idU').val(response.data.id);
 	        $('#document_type_idU').val(response.data.document_type_id);
 	        $('#dateU').val(response.data.date);
-	        $('#fromU').val(response.data.from);
-	        $('#toU').val(response.data.to);
-	        $('#headerU').val(response.data.header);
 		});
-
+		
 		$('#my_formU').submit(function(e) {
 			e.preventDefault();
-			var f = $(this);
 			actualizar(id);
 		});
 	}
+	
 
 	function actualizar(id){
 		var formData = new FormData(document.getElementById("my_formU"));
 		formData.append("dato", "valor");
-		let url = 'actualizar/documento/'+id;
-		axios.put(url,formData).then(response=>{
+		let url = 'actualizar/archivo/'+id;
+		axios.post(url,formData).then(response=>{
 		    $('#updateModal').modal('toggle');
 	        $('#ciU').val('');
 	        $('#codeU').val('');
@@ -250,7 +246,7 @@
 	}
 
 	function eliminar(id){
-		let url = 'eliminar/documento/'+id;
+		let url = 'eliminar/archivo/'+id;
 		axios.delete(url).then(response=>{
 			alertify.success("eliminado con exito!");
 			let tabla = $('#tb').DataTable();

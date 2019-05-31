@@ -35,7 +35,6 @@ class DocumentController extends Controller
         ->join('document_types','document_types.id','=','documents.document_type_id')
         ->join('people','people.id','=','documents.person_id')
         ->select('documents.id as id','people.ci as ci','title','from','to','affair','date','document_types.name as type')->get();
-
         $documentos = ['data'=>$documentos];
         return $documentos;
     }
@@ -62,7 +61,6 @@ class DocumentController extends Controller
             'user_id'            =>  $documento->user_id,
             'document_type_id'   =>  $documento->document_type_id,
         ];
-
         return Response()->json($data);
     }
 
@@ -70,15 +68,12 @@ class DocumentController extends Controller
     {
         $user_id = \Auth::User()->id;
         $code = time().'COD';
-
         $persona = Person::where('ci',$request->ci)->first();
-        
         if (is_null($persona)) {
             $persona = Person::create([
                 'ci'        =>  $request->ci,
             ]);
         }
-
         $documento = Document::create([
             'code'               =>  $code,
             'title'              =>  $request->title,
@@ -92,13 +87,11 @@ class DocumentController extends Controller
             'user_id'            =>  $user_id,
             'document_type_id'   =>  $request->document_type_id,
         ]);
-
         if ($request->file('file')) {
             $file = $request->file('file');
             $name_file = time().'.'.$file->getClientOriginalExtension();
             $path = public_path().'\archivos';
             $file->move($path,$name_file);
-
             $archivo = File::create([
                 'code'               =>  $code,
                 'title'              =>  $request->title,
@@ -109,26 +102,22 @@ class DocumentController extends Controller
                 'user_id'            =>  $user_id,
                 'document_type_id'   =>  $request->document_type_id,
             ]);
-
             if ($archivo) {
                 $documento->file_id = $archivo->id;
                 $documento->save();
             }
         }
-
         $bitacora = Binnacle::create([
             'user_id'           => \Auth::User()->id,
             'action'            =>  'Crear',
             'description'       =>  'Nuevo documento '.$documento->title.' agregado exitosamente!',
             'date'              =>  Carbon::now(),
         ]);
-
         return Response()->json($request->all());
     }
 
     public function show($id){
         $documento = Document::find($id);
-
         $documento = [
             'code'      => $documento->code,
             'title'     => $documento->title,
@@ -150,17 +139,12 @@ class DocumentController extends Controller
     public function update(Request $request, $id)
     {
         $user_id = \Auth::User()->id;
-
         $persona = Person::where('ci',$request->ci)->first();
-        
         if (is_null($persona)) {
             $persona = Person::create([
-                'ci'        =>  $request->ci,
+                'ci'        =>  $request->ci
             ]);
         }
-
-        return Response()->json($request->all());
-
         $documento = Document::find($id)->update([
             'title'              =>  $request->title,
             'header'             =>  $request->header,
@@ -173,25 +157,37 @@ class DocumentController extends Controller
             'user_id'            =>  $user_id,
             'document_type_id'   =>  $request->document_type_id,
         ]);
-
         if ($request->file('file')) {
             $file = $request->file('file');
             $name_file = time().'.'.$file->getClientOriginalExtension();
             $path = public_path().'\archivos';
             $file->move($path,$name_file);
 
-            $archivo = File::find($documento->file_id)->update([
-                'code'               =>  $request->code,
-                'title'              =>  $request->title,
-                'file'               =>  $name_file,
-                'affair'             =>  $request->affair,
-                'date'               =>  $request->date,
-                'person_id'          =>  $persona->id,
-                'user_id'            =>  $user_id,
-                'document_type_id'   =>  $request->document_type_id,
-            ]);
-        }
+            if (is_null($documento->file_id)) {
+                $archivo = File::create([
+                    'code'               =>  $documento->code,
+                    'title'              =>  $request->title,
+                    'file'               =>  $name_file,
+                    'affair'             =>  $request->affair,
+                    'date'               =>  $request->date,
+                    'person_id'          =>  $persona->id,
+                    'user_id'            =>  $user_id,
+                    'document_type_id'   =>  $request->document_type_id,
+                ]);
+            }else{
+                $archivo = File::find($documento->file_id)->update([
+                    'code'               =>  $request->code,
+                    'title'              =>  $request->title,
+                    'file'               =>  $name_file,
+                    'affair'             =>  $request->affair,
+                    'date'               =>  $request->date,
+                    'person_id'          =>  $persona->id,
+                    'user_id'            =>  $user_id,
+                    'document_type_id'   =>  $request->document_type_id,
+                ]);
+            }
 
+        }
         $documento = Document::find($id);
         $bitacora = Binnacle::create([
             'user_id'           => \Auth::User()->id,
@@ -200,7 +196,6 @@ class DocumentController extends Controller
             'small_description' =>  'Edicion de documento',
             'date'              =>  Carbon::now(),
         ]);
-        
         return json_encode($request);
     }
 
@@ -210,7 +205,6 @@ class DocumentController extends Controller
         $documento = Document::find($id);
         $name = $documento->name;
         $documento->delete();
-
         $bitacora = Binnacle::create([
             'user_id'           => \Auth::User()->id,
             'action'            =>  'Eliminar',

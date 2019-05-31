@@ -79,7 +79,7 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
     Route::get('todos/documentos','DocumentController@all')->name('documentos.all');
 	Route::get('ver/documento/{id}','DocumentController@show')->name('documentos.ver');
 	Route::get('editar/documento/{id}','DocumentController@editar')->name('documentos.editar');
-	Route::put('actualizar/documento/{id}','DocumentController@update')->name('documentos.actualizar');
+	Route::post('actualizar/documento/{id}','DocumentController@update')->name('documentos.actualizar');
 	Route::delete('eliminar/documento/{id}','DocumentController@destroy')->name('documentos.eliminar');
     Route::get('cantidad/documentos','DocumentController@cantidad')->name('documentos.cantidad');
 	// documentos
@@ -87,9 +87,11 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	// Archivos
 	Route::resource('archivos','FileController');
     Route::get('todos/archivos','FileController@all')->name('archivos.all');
-	Route::get('ver/archivos/{id}','FileController@show')->name('archivos.ver');
+	Route::get('ver/archivo/{id}','FileController@show')->name('archivos.ver');
 	Route::get('editar/archivo/{id}','FileController@editar')->name('archivos.editar');
-	Route::put('actualizar/archivo/{id}','FileController@update')->name('archivos.actualizar');
+	Route::post('actualizar/archivo/{id}','FileController@update')->name('archivos.actualizar');
+	Route::delete('eliminar/archivo/{id}','FileController@destroy')->name('archivos.eliminar');
+    Route::get('cantidad/archivos','FileController@cantidad')->name('archivos.cantidad');
 
 	// Archivos
     
