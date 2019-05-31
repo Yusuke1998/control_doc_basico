@@ -99,6 +99,7 @@
 		        </button>
 		      </div>
 		      <div class="modal-body mx-3">
+		          <input type="hidden" name="id" id="idU">
 		      	<div class="md-form mb-5">
 		          <input type="text" name="ci" id="ciU" class="form-control validate">
 		          <label data-error="Error" data-success="Bien" for="ciU">Cedula</label>
@@ -165,7 +166,7 @@
 		axios.post(url,formData)
 	    .then(function(res) {
 	      if(res.status==200) {
-		    $('#createModal').modal('toggle');
+		    $('#createModal').modal('hide');
             alertify.success("agregado con exito!");
 	        let tabla = $('#tb').DataTable();
 		    tabla.ajax.reload( null, false );
@@ -201,6 +202,7 @@
 	function editar(id){
 		let url = 'editar/archivo/'+id;
 		axios.get(url).then(response=>{
+			$('#idU').val(response.data.id);
 			$('#ciU').focus();
 			$('#ciU').val(response.data.ci);
 			$('#codeU').focus();
@@ -209,37 +211,26 @@
 			$('#titleU').val(response.data.title);
 			$('#affairU').focus();
 	        $('#affairU').val(response.data.affair);
-			$('#idU').val(response.data.id);
 	        $('#document_type_idU').val(response.data.document_type_id);
 	        $('#dateU').val(response.data.date);
 		});
 		
-		$('#my_formU').submit(function(e) {
-			e.preventDefault();
-			actualizar(id);
-		});
 	}
 	
+	$('#my_formU').submit(function(e) {
+		e.preventDefault();
+		let id = $('#idU').val();
+		actualizar(id);
+	});
 
 	function actualizar(id){
 		var formData = new FormData(document.getElementById("my_formU"));
 		formData.append("dato", "valor");
 		let url = 'actualizar/archivo/'+id;
 		axios.post(url,formData).then(response=>{
-		    $('#updateModal').modal('toggle');
-	        $('#ciU').val('');
-	        $('#codeU').val('');
-	        $('#titleU').val('');
-	        $('#affairU').val('');
-	        $('#textU').val('');
-	        $('#document_type_idU').val('');
-	        $('#dateU').val('');
-	        $('#fromU').val('');
-	        $('#toU').val('');
-	        $('#headerU').val('');
+		    $('#updateModal').modal('hide');
             alertify.success("editado con exito!");
-			
-		let tabla = $('#tb').DataTable();
+			let tabla = $('#tb').DataTable();
 		    tabla.ajax.reload( null, false );
 		});
 

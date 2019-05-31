@@ -114,6 +114,7 @@
 		      </div>
 		      <div class="modal-body mx-3">
 		        <div class="md-form mb-5">
+		          <input type="hidden" name="id" id="idU">
 		          <input type="text" name="ci" id="ciU" class="form-control validate">
 		          <label data-error="Error" data-success="Bien" for="ciU">Cedula</label>
 		        </div>
@@ -191,11 +192,10 @@
 		axios.post(url,formData)
 	    .then(function(res) {
 	      if(res.status==200) {
-		    $('#createModal').modal('toggle');
+		    $('#createModal').modal('hide');
             alertify.success("agregado con exito!");
 	        let tabla = $('#tb').DataTable();
 		    tabla.ajax.reload( null, false );
-	        $('#name').val('');
 	      }
 	    })
 	    .catch(function(err) {
@@ -232,7 +232,6 @@
 			$('#idU').val(response.data.id);
 	        $('#document_type_idU').val(response.data.document_type_id);
 	        $('#dateU').val(response.data.date);
-
 			$('#ciU').focus();
 			$('#ciU').val(response.data.ci);
 			$('#titleU').focus();
@@ -249,34 +248,24 @@
 	        $('#headerU').val(response.data.header);
 		});
 
-		$('#my_formU').submit(function(e) {
-			e.preventDefault();
-			actualizar(id);
-		});
 	}
+
+	$('#my_formU').submit(function(e) {
+		e.preventDefault();
+		let id = $('#idU').val();
+		actualizar(id);
+	});
 
 	function actualizar(id){
 		var formData = new FormData(document.getElementById("my_formU"));
 		formData.append("dato", "valor");
 		let url = 'actualizar/documento/'+id;
 		axios.post(url,formData)
-		.then(function(response){
-	      if(response.status==200) {
-	        $('#ciU').val('');
-	        $('#titleU').val('');
-	        $('#affairU').val('');
-	        $('#textU').val('');
-	        $('#document_type_idU').val('');
-	        $('#dateU').val('');
-	        $('#fromU').val('');
-	        $('#toU').val('');
-	        $('#headerU').val('');
-		    $('#updateModal').modal('toggle');
+		.then(response=>{
+		  	$('#updateModal').modal('hide');
+            alertify.success("editado con exito!");
 			let tabla = $('#tb').DataTable();
 		    tabla.ajax.reload( null, false );
-            alertify.success("editado con exito!");
-	      }
-
 		});
 	}
 

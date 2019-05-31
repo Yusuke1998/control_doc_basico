@@ -47,6 +47,7 @@ class DocumentController extends Controller
     public function editar($id){
         $documento = Document::find($id);
         $data = [
+            'id'                 =>  $documento->id,
             'code'               =>  $documento->code,
             'ci'                 =>  $documento->person->ci,
             'title'              =>  $documento->title,
@@ -145,7 +146,8 @@ class DocumentController extends Controller
                 'ci'        =>  $request->ci
             ]);
         }
-        $documento = Document::find($id)->update([
+        $documento = Document::where('id',$id)->first()->update(
+        [
             'title'              =>  $request->title,
             'header'             =>  $request->header,
             'text'               =>  $request->text,
@@ -155,40 +157,46 @@ class DocumentController extends Controller
             'date'               =>  $request->date,
             'person_id'          =>  $persona->id,
             'user_id'            =>  $user_id,
-            'document_type_id'   =>  $request->document_type_id,
+            'document_type_id'   =>  $request->document_type_id
         ]);
         if ($request->file('file')) {
             $file = $request->file('file');
             $name_file = time().'.'.$file->getClientOriginalExtension();
             $path = public_path().'\archivos';
             $file->move($path,$name_file);
-
-            if (is_null($documento->file_id)) {
+            $documento = Document::where('id',$id)->first();
+            $archivo = File::where('id',$documento->file_id)->first();
+            if (is_null($archivo)) {
                 $archivo = File::create([
                     'code'               =>  $documento->code,
-                    'title'              =>  $request->title,
+                    'title'              =>  $documento->title,
                     'file'               =>  $name_file,
-                    'affair'             =>  $request->affair,
-                    'date'               =>  $request->date,
-                    'person_id'          =>  $persona->id,
-                    'user_id'            =>  $user_id,
-                    'document_type_id'   =>  $request->document_type_id,
+                    'affair'             =>  $documento->affair,
+                    'date'               =>  $documento->date,
+                    'person_id'          =>  $documento->person_id,
+                    'user_id'            =>  $documento->user_id,
+                    'document_type_id'   =>  $documento->document_type_id
                 ]);
+                if ($archivo) {
+                    $documento->file_id = $archivo->id;
+                    $documento->save();
+                }
             }else{
-                $archivo = File::find($documento->file_id)->update([
-                    'code'               =>  $request->code,
-                    'title'              =>  $request->title,
+                $archivo->update(
+                [
+                    'code'               =>  $documento->code,
+                    'title'              =>  $documento->title,
                     'file'               =>  $name_file,
-                    'affair'             =>  $request->affair,
-                    'date'               =>  $request->date,
-                    'person_id'          =>  $persona->id,
-                    'user_id'            =>  $user_id,
-                    'document_type_id'   =>  $request->document_type_id,
+                    'affair'             =>  $documento->affair,
+                    'date'               =>  $documento->date,
+                    'person_id'          =>  $documento->person_id,
+                    'user_id'            =>  $documento->user_id,
+                    'document_type_id'   =>  $documento->document_type_id
                 ]);
             }
-
         }
-        $documento = Document::find($id);
+
+        $documento = Document::where('id',$id)->first();    
         $bitacora = Binnacle::create([
             'user_id'           => \Auth::User()->id,
             'action'            =>  'Editar',

@@ -38,6 +38,7 @@ class FileController extends Controller
     public function editar($id){
         $archivo = File::find($id);
         $data = [
+            'id'                 =>  $archivo->id,
             'ci'                 =>  $archivo->person->ci,
             'code'               =>  $archivo->code,
             'title'              =>  $archivo->title,
@@ -116,18 +117,30 @@ class FileController extends Controller
             $name_file = time().'.'.$file->getClientOriginalExtension();
             $path = public_path().'\archivos';
             $file->move($path,$name_file);
+            $archivo = File::find($id)->update([
+                'code'               =>  $request->code,
+                'title'              =>  $request->title,
+                'file'               =>  $name_file,
+                'affair'             =>  $request->affair,
+                'date'               =>  $request->date,
+                'person_id'          =>  $persona->id,
+                'user_id'            =>  $user_id,
+                'document_type_id'   =>  $request->document_type_id,
+            ]);
         }
-        $archivo = File::find($id)->update([
-            'code'               =>  $request->code,
-            'title'              =>  $request->title,
-            'file'               =>  isset($name_file)?$name_file:'',
-            'affair'             =>  $request->affair,
-            'date'               =>  $request->date,
-            'person_id'          =>  $persona->id,
-            'user_id'            =>  $user_id,
-            'document_type_id'   =>  $request->document_type_id,
-        ]);
         $archivo = File::find($id);
+        if ($archivo->document()) {
+            $archivo->document->update([
+                'code'              =>  $archivo->code,
+                'title'             =>  $archivo->title,
+                'file'              =>  $archivo->file,
+                'affair'            =>  $archivo->affair,
+                'date'              =>  $archivo->date,
+                'person_id'         =>  $archivo->person_id,
+                'user_id'           =>  $archivo->user_id,
+                'document_type_id'  =>  $archivo->document_type_id,
+            ]);
+        }
         $bitacora = Binnacle::create([
             'user_id'           => \Auth::User()->id,
             'action'            =>  'Editar',
