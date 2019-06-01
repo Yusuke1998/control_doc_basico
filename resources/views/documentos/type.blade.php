@@ -18,8 +18,8 @@
 					<tbody>
 						@foreach($tipos as $tipo)
 						<tr>
-							<td>data</td>
-							<td>data</td>
+							<td>{{ $tipo->id }}</td>
+							<td>{{ $tipo->name }}</td>
 							<td>
 								<a class="btn btn-sm" data-toggle="modal" data-target="#updateModal" onclick="editar({{ $tipo->id }});" title="">Editar</a>
 

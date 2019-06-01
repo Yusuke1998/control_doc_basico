@@ -14,12 +14,8 @@ class DocumentTypeController extends Controller
 
     public function index()
     {
-        //
-    }
-
-    public function create()
-    {
-        //
+        $tipos = Document_type::all();
+        return view('documentos.type',compact('tipos'));
     }
 
     public function store(Request $request)

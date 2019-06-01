@@ -66,18 +66,12 @@
             <li class="nav-item {{ (request()->is('documentos/inicio'))?'active':'' }}">
               <a class="nav-link waves-effect" href="{{ URL('/') }}">INICIO</a>
             </li>
-            @if(\Auth::User()->type == "almacenista" || \Auth::User()->type == "administrador")
+            @if(\Auth::User()->type == "secretaria" || \Auth::User()->type == "administrador")
             <li class="nav-item {{ (request()->is('documentos/documentos'))?'active':'' }}">
               <a class="nav-link waves-effect" href="{{ URL('/documentos/documentos') }}">DOCUMENTOS</a>
             </li>
             <li class="nav-item {{ (request()->is('documentos/archivos'))?'active':'' }}">
               <a class="nav-link waves-effect" href="{{ URL('/documentos/archivos') }}">ARCHIVOS</a>
-            </li>
-            <li class="nav-item {{ (request()->is('documentos/areas'))?'active':'' }}">
-              <a class="nav-link waves-effect" href="{{ URL('/documentos/areas') }}">AREAS</a>
-            </li>
-            <li class="nav-item {{ (request()->is('documentos/lugares'))?'active':'' }}">
-              <a class="nav-link waves-effect" href="{{ URL('/documentos/lugares') }}">LUGARES</a>
             </li>
             <li class="nav-item {{ (request()->is('documentos/entradas'))?'active':'' }}">
               <a class="nav-link waves-effect" href="{{ URL('/documentos/entradas') }}">ENTRADAS</a>
@@ -98,6 +92,27 @@
             </li>
             @endif
 
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">PRECARGAR
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item {{ (request()->is('documentos/areas'))?'active':'' }}" href="{{ URL('/documentos/areas') }}">AREAS</a>
+                <a class="dropdown-item {{ (request()->is('documentos/lugares'))?'active':'' }}" href="{{ URL('/documentos/lugares') }}">LUGARES</a>
+                <a class="dropdown-item {{ (request()->is('documentos/tipo/documento  '))?'active':'' }}" href="{{ URL('/documentos/tipo/documento') }}">TIPO DE DOCUMENTO</a>
+              </div>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">ADMINISTRADOR
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item {{ (request()->is('documentos/areas'))?'active':'' }}" href="{{ URL('/documentos/areas') }}">USUARIOS</a>
+                <a class="dropdown-item {{ (request()->is('documentos/lugares'))?'active':'' }}" href="{{ URL('/documentos/lugares') }}">BITACORA</a>
+                <a class="dropdown-item {{ (request()->is('documentos/tipo/documento  '))?'active':'' }}" href="{{ URL('/documentos/tipo/documento') }}"></a>
+              </div>
+            </li>
           </ul>
           <!-- Right -->
           <ul class="navbar-nav nav-flex-icons">
