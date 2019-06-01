@@ -83,14 +83,6 @@
               <a class="nav-link waves-effect" href="{{ URL('/documentos/reportes') }}">REPORTES</a>
             </li>
             @endif
-            @if(\Auth::User()->type == "administrador")
-            <li class="nav-item {{ (request()->is('documentos/bitacora'))?'active':'' }}">
-              <a class="nav-link waves-effect" href="{{ URL('/documentos/bitacora') }}">BITACORA</a>
-            </li>
-            <li class="nav-item {{ (request()->is('documentos/usuarios'))?'active':'' }}">
-              <a class="nav-link waves-effect" href="{{ URL('/documentos/usuarios') }}">USUARIOS</a>
-            </li>
-            @endif
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -103,16 +95,18 @@
               </div>
             </li>
 
+            @if(\Auth::User()->type == "administrador")
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">ADMINISTRADOR
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item {{ (request()->is('documentos/areas'))?'active':'' }}" href="{{ URL('/documentos/areas') }}">USUARIOS</a>
-                <a class="dropdown-item {{ (request()->is('documentos/lugares'))?'active':'' }}" href="{{ URL('/documentos/lugares') }}">BITACORA</a>
+                <a class="dropdown-item {{ (request()->is('documentos/usuarios'))?'active':'' }}" href="{{ URL('/documentos/usuarios') }}">USUARIOS</a>
+                <a class="dropdown-item {{ (request()->is('documentos/bitacora'))?'active':'' }}" href="{{ URL('/documentos/bitacora') }}">BITACORA</a>
                 <a class="dropdown-item {{ (request()->is('documentos/tipo/documento  '))?'active':'' }}" href="{{ URL('/documentos/tipo/documento') }}"></a>
               </div>
             </li>
+            @endif
           </ul>
           <!-- Right -->
           <ul class="navbar-nav nav-flex-icons">
@@ -139,34 +133,26 @@
 
     <!-- Sidebar -->
     <div class="sidebar-fixed position-fixed">
-
-      <a class="logo-wrapper waves-effect"  href="{{ URL('/') }}">
-        <img src="{{ asset('dag.png') }}" width="200px" height="200px" class="img-fluid" alt="">
+      <a class="logo-wrapper waves-effect text-center"  href="{{ URL('/') }}">
+        <p class="h1">CSD</p>
       </a>
-
       <div class="list-group list-group-flush">
         <a href="{{ URL('/') }}" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-chart-pie mr-3"></i>INICIO
         </a>
-        <a href="" class="list-group-item list-group-item-action waves-effect">
+        <a href="{{ URL('/documentos/documentos') }}" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-table mr-3"></i>DOCUMENTOS</a>
 
-        <a href="" class="list-group-item list-group-item-action waves-effect">
+        <a href="{{ URL('/documentos/archivos') }}" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-table mr-3"></i>ARCHIVOS</a>
 
-        <a href="" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-table mr-3"></i>AREAS</a>
-
-        <a href="" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-table mr-3"></i>LUGARES</a>
-
-        <a href="" class="list-group-item list-group-item-action waves-effect">
+        <a href="{{ URL('/documentos/entradas') }}" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-table mr-3"></i>ENTRADAS</a>
 
-        <a href="" class="list-group-item list-group-item-action waves-effect">
+        <a href="{{ URL('/documentos/salidas') }}" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-map mr-3"></i>SALIDAS</a>
 
-        <a href="" class="list-group-item list-group-item-action waves-effect">
+        <a href="{{ URL('/documentos/reportes') }}" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-money-bill-alt mr-3"></i>REPORTES</a>
       </div>
 
