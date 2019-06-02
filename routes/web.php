@@ -100,15 +100,10 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	// Archivos
     
 	// documentos tipos
-    Route::get('tipo/documento','DocumentTypeController@index')->name('tipos.index');
-    
-    Route::post('nuevo/tipo/documento','DocumentTypeController@store')->name('tipos.crear');
-    
-    Route::post('eliminar/tipo/documento/{id}','DocumentTypeController@destroy')->name('tipos.eliminar');
-    
-    Route::post('editar/tipo/documento/{id}','DocumentTypeController@edit')->name('tipos.editar');
-    
-    Route::post('actualizar/tipo/documento/{id}','DocumentTypeController@update')->name('tipos.actualizar');
+	Route::resource('tipos','DocumentTypeController');
+    Route::get('tipos/editar/{id}','DocumentTypeController@editar')->name('tipos.editar');
+	Route::post('tipos/eliminar/{id}','DocumentTypeController@destroy')->name('tipos.eliminar');
+	Route::post('tipos/actualizar/{id}','DocumentTypeController@update')->name('tipos.actualizar');
 	// documentos tipos
 
 

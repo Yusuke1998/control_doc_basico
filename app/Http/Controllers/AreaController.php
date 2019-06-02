@@ -20,10 +20,6 @@ class AreaController extends Controller
         return view('areas.index',compact('areas',$areas));
     }
 
-    public function show($id)
-    {
-        return $id;
-    }
     public function store(Request $request)
     {
         $area = Area::create($request->all());

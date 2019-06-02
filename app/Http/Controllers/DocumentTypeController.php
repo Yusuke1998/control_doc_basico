@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Document_type;
+use App\Binnacle;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 
 class DocumentTypeController extends Controller
@@ -20,26 +22,47 @@ class DocumentTypeController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $tipo = Document_type::create($request->all());
+        $bitacora = Binnacle::create([
+            'user_id'           => \Auth::User()->id,
+            'action'            =>  'Crear',
+            'description'       =>  'Nuevo tipo de documento '.$tipo->name.' agregado exitosamente!',
+            'date'              =>  Carbon::now(),
+        ]);
+        return Response()->json($tipo);
     }
 
-    public function show(Document_type $document_type)
+    public function editar($id)
     {
-        //
+        $tipo = Document_type::find($id);
+        return Response()->json($tipo);
     }
 
-    public function edit(Document_type $document_type)
+    public function update(Request $request, $id)
     {
-        //
+        $name = Document_type::find($id)->name;
+        $edit = Document_type::find($id)->update($request->all());
+        $bitacora = Binnacle::create([
+            'user_id'           => \Auth::User()->id,
+            'action'            =>  'Editar',
+            'description'       =>  'Tipo de documento '.$name.' editado exitosamente!',
+            'date'              =>  Carbon::now(),
+        ]);
+        return Response()->json($edit);
     }
 
-    public function update(Request $request, Document_type $document_type)
+    public function destroy($id)
     {
-        //
-    }
+        $tipo = Document_type::find($id);
+        $name = $tipo->name;
+        $tipo->delete();
 
-    public function destroy(Document_type $document_type)
-    {
-        //
+        $bitacora = Binnacle::create([
+            'user_id'           => \Auth::User()->id,
+            'action'            =>  'Eliminar',
+            'description'       =>  'Tipo de documento '.$name.' eliminado exitosamente!',
+            'date'              =>  Carbon::now(),
+        ]);
+        return back();
     }
 }

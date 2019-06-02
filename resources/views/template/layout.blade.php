@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -91,7 +90,7 @@
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item {{ (request()->is('documentos/areas'))?'active':'' }}" href="{{ URL('/documentos/areas') }}">AREAS</a>
                 <a class="dropdown-item {{ (request()->is('documentos/lugares'))?'active':'' }}" href="{{ URL('/documentos/lugares') }}">LUGARES</a>
-                <a class="dropdown-item {{ (request()->is('documentos/tipo/documento  '))?'active':'' }}" href="{{ URL('/documentos/tipo/documento') }}">TIPO DE DOCUMENTO</a>
+                <a class="dropdown-item {{ (request()->is('documentos/tipos  '))?'active':'' }}" href="{{ URL('/documentos/tipos') }}">TIPO DE DOCUMENTO</a>
               </div>
             </li>
 
@@ -103,7 +102,6 @@
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item {{ (request()->is('documentos/usuarios'))?'active':'' }}" href="{{ URL('/documentos/usuarios') }}">USUARIOS</a>
                 <a class="dropdown-item {{ (request()->is('documentos/bitacora'))?'active':'' }}" href="{{ URL('/documentos/bitacora') }}">BITACORA</a>
-                <a class="dropdown-item {{ (request()->is('documentos/tipo/documento  '))?'active':'' }}" href="{{ URL('/documentos/tipo/documento') }}"></a>
               </div>
             </li>
             @endif
