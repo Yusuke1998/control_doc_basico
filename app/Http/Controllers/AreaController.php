@@ -20,6 +20,10 @@ class AreaController extends Controller
         return view('areas.index',compact('areas',$areas));
     }
 
+    public function show($id)
+    {
+        return $id;
+    }
     public function store(Request $request)
     {
         $area = Area::create($request->all());
@@ -40,11 +44,12 @@ class AreaController extends Controller
 
     public function update(Request $request, $id)
     {
+        $name = Area::find($id)->name;
         $edit = Area::find($id)->update($request->all());
         $bitacora = Binnacle::create([
             'user_id'           => \Auth::User()->id,
             'action'            =>  'Editar',
-            'description'       =>  'Area '.$area->name.' editada exitosamente!',
+            'description'       =>  'Area '.$name.' editada exitosamente!',
             'date'              =>  Carbon::now(),
         ]);
         return Response()->json($edit);

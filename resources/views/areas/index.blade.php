@@ -23,9 +23,9 @@
 				      <td>{{ $area->name }}</td>
 				      <td>{{ $area->description }}</td>
 				      <td>
-				      		<a class="btn btn-sm" data-toggle="modal" data-target="#updateModal" onclick="editarP({{ $area->id }});" title="">Editar</a>
+				      		<a class="btn btn-sm" data-toggle="modal" data-target="#updateModal" onclick="editar({{ $area->id }});" title="">Editar</a>
 
-				      		<a class="btn btn-sm" id="eliminar" href="{{ Route('areas.destroy',$area->id) }}" title="">Eliminar</a>
+				      		<a class="btn btn-sm" id="eliminar" onclick="eliminar({{ $area->id }});" title="">Eliminar</a>
 				      </td>
 				    </tr>
 				    @endforeach
@@ -39,9 +39,7 @@
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 	  aria-hidden="true">
 	<form action="{{ route('areas.store') }}" method="post" id="my_form">
-	{{-- enctype='multipart/form-data' --}}
 	{{ csrf_field() }}
-	  <!-- Change class .modal-sm to change the size of the modal -->
 	  <div class="modal-dialog modal-md" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -50,15 +48,12 @@
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
-
 	      <div class="modal-body mx-3">
 	        <div class="md-form mb-5">
-	         {{--  <i class="fas fa-envelope prefix grey-text"></i> --}}
 	          <input type="text" name="name" id="nombre" class="form-control validate">
 	          <label data-error="Error" data-success="Bien" for="nombre">Nombre</label>
 	        </div>
 	        <div class="md-form mb-4">
-	          {{-- <i class="fas fa-lock prefix grey-text"></i> --}}
 	          <input type="text" name="description" id="descripcion" class="form-control validate">
 	          <label data-error="Error" data-success="Bien" for="descripcion">Descripcion</label>
 	        </div>
@@ -90,7 +85,7 @@
 	      </div>
 	      <div class="modal-body mx-3">
 	        <div class="md-form mb-5">
-              <input type="hidden" name="_method" value="PUT">
+	          <input type="hidden" name="id" id="idu">
 	          <input type="text" name="name" id="nombreu" class="form-control validate">
 	          <label data-error="Error" data-success="Bien" for="nombreu">Nombre</label>
 			</div>
@@ -136,16 +131,14 @@
                         $("#tb").load(" #tb");
                         $('#createModal').modal('toggle');
                         alertify.success("agregado con exito");
-    		            console.log('success: '+data);
 		        },
 		        error: function(data) {
                     alertify.error("Fallo al agregar");
-		            var errors = data.responseJSON;
 		        }
 		    });
 		});
 
-		function editarP(id){
+		function editar(id){
             $.ajaxSetup({
 		        headers: {
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -156,42 +149,62 @@
 		        type: 'get',
 		        url: url2,
 		        success: function(data) {
+                    $('#idu').val(data.id);
+                    $('#nombreu').focus();
                     $('#nombreu').val(data.name);
+                    $('#descripcionu').focus();
                     $('#descripcionu').val(data.description);
-				    $('#bsubmitu').on('click', function(e){  
-				        e.preventDefault();
-					    $.ajaxSetup({
-	                        headers: {
-	                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	                        }
-                        });
-		                var my_form_u = $('#my_form_u').serialize();
-            			var urlu = location.href+'/actualizar/'+id;
-            			console.log(urlu);
+		        }
+		    });
+		};
 
-		                $.ajax({
-		                    type: 'post',
-		                    url: urlu,
-		                    data: my_form_u,
-				        	dataType: 'JSON',
-		                    success: function(data) {
-		                    	console.log('ajax success');
-		                        $("#tb").load(" #tb");
-		                        $('#updateModal').modal('toggle');
-		                        // alertify.error("Error en edicion!");
-		                        alertify.success("Editado con exito!");
-		                    },
-		                    error: function() {
-		                    	console.log('ajax error');
-		                        $("#tb").load(" #tb");
-		                        $('#updateModal').modal('toggle');
-		                        alertify.success("Editado con exito!");
-		                    }
-		                });
-		            });
+
+		$('#bsubmitu').on('click', function(e){  
+	        e.preventDefault();
+		    $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var id = $('#idu').val();
+            var my_form_u = $('#my_form_u').serialize();
+			var urlu = location.href+'/actualizar/'+id;
+            $.ajax({
+                type: 'post',
+                url: urlu,
+                data: my_form_u,
+	        	dataType: 'JSON',
+                success: function(data) {
+                	console.log('ajax success');
+                    $("#tb").load(" #tb");
+                    $('#updateModal').modal('hide');
+                    alertify.success("Editado con exito!");
+                },
+                error: function() {
+                	console.log('ajax error');
+                    $("#tb").load(" #tb");
+                    $('#updateModal').modal('hide');
+                    alertify.error("Problema para editar!");
+                }
+            });
+        });
+        
+		function eliminar(id){
+            $.ajaxSetup({
+		        headers: {
+		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		        }
+            });
+            var url2 = location.href+'/eliminar/'+id;
+		    $.ajax({
+		        type: 'post',
+		        url: url2,
+		        success: function(data) {
+                    $("#tb").load(" #tb");
+		        	alertify.success('Eliminado con exito!');
 		        },
 		        error: function(data) {
-		            var errors = data.responseJSON;
+		        	alertify.error('Problema para eliminar!');
 		        }
 		    });
 		};

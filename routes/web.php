@@ -34,11 +34,15 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	// AREAS
 	Route::resource('areas','AreaController');
 	Route::get('areas/editar/{id}','AreaController@editar')->name('areas.editar');
+	Route::post('areas/eliminar/{id}','AreaController@destroy')->name('areas.eliminar');
+	Route::post('areas/actualizar/{id}','AreaController@update')->name('areas.actualizar');
 	// AREAS
 
 	// LUGARES
 	Route::resource('lugares','SiteController');
 	Route::get('lugares/editar/{id}','SiteController@editar')->name('lugares.editar');
+	Route::post('lugares/eliminar/{id}','SiteController@destroy')->name('lugares.eliminar');
+	Route::post('lugares/actualizar/{id}','SiteController@update')->name('lugares.actualizar');
 	// LUGARES
 
 	// ENTRADAS

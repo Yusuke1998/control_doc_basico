@@ -25,9 +25,9 @@
 				      <td>{{ $lugar->area->name }}</td>
 				      <td>{{ $lugar->description }}</td>
 				      <td>
-				      		<a class="btn btn-sm" data-toggle="modal" data-target="#updateModal" onclick="editarP({{ $lugar->id }});" title="">Editar</a>
+				      		<a class="btn btn-sm" data-toggle="modal" data-target="#updateModal" onclick="editar({{ $lugar->id }});" title="">Editar</a>
 
-				      		<a class="btn btn-sm" id="eliminar" href="{{ Route('lugares.destroy',$lugar->id) }}" title="">Eliminar</a>
+				      		<a class="btn btn-sm" id="eliminar" onclick="eliminar({{ $lugar->id }});" title="">Eliminar</a>
 				      </td>
 				    </tr>
 				    @endforeach
@@ -100,7 +100,7 @@
 	      </div>
 	      <div class="modal-body mx-3">
 	        <div class="md-form mb-5">
-              <input type="hidden" name="_method" value="PUT">
+              <input type="hidden" id="idu" name="id">
 	          <input type="text" name="site" id="nombreu" class="form-control validate">
 	          <label data-error="Error" data-success="Bien" for="nombreu">Nombre</label>
 			</div>
@@ -161,7 +161,7 @@
 		    });
 		});
 
-		function editarP(id){
+		function editar(id){
             $.ajaxSetup({
 		        headers: {
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -172,43 +172,65 @@
 		        type: 'get',
 		        url: url2,
 		        success: function(data) {
+                    $('#idu').val(data.id);
+                    $('#nombreu').focus();
                     $('#nombreu').val(data.site);
+                    $('#descripcionu').focus();
                     $('#descripcionu').val(data.description);
                     $('#areau').val(data.area_id);
-				    $('#bsubmitu').on('click', function(e){  
-				        e.preventDefault();
-					    $.ajaxSetup({
-	                        headers: {
-	                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	                        }
-                        });
-		                var my_form_u = $('#my_form_u').serialize();
-            			var urlu = location.href+'/actualizar/'+id;
-            			console.log(urlu);
-
-		                $.ajax({
-		                    type: 'post',
-		                    url: urlu,
-		                    data: my_form_u,
-				        	dataType: 'JSON',
-		                    success: function(data) {
-		                    	console.log('ajax success');
-		                        $("#tb").load(" #tb");
-		                        $('#updateModal').modal('toggle');
-		                        // alertify.error("Error en edicion!");
-		                        alertify.success("Editado con exito!");
-		                    },
-		                    error: function() {
-		                    	console.log('ajax error');
-		                        $("#tb").load(" #tb");
-		                        $('#updateModal').modal('toggle');
-		                        alertify.success("Editado con exito!");
-		                    }
-		                });
-		            });
 		        },
 		        error: function(data) {
 		            var errors = data.responseJSON;
+		        }
+		    });
+		};
+
+		$('#bsubmitu').on('click', function(e){  
+	        e.preventDefault();
+		    $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var id = $('#idu').val();
+            var my_form_u = $('#my_form_u').serialize();
+			var urlu = location.href+'/actualizar/'+id;
+            $.ajax({
+                type: 'post',
+                url: urlu,
+                data: my_form_u,
+	        	dataType: 'JSON',
+                success: function(data) {
+                	console.log('ajax success');
+                    $("#tb").load(" #tb");
+                    $('#updateModal').modal('hide');
+                    alertify.success("Editado con exito!");
+                },
+                error: function() {
+                	console.log('ajax error');
+                    $("#tb").load(" #tb");
+                    $('#updateModal').modal('hide');
+                    alertify.error("Problema para editar!");
+                }
+            });
+        });
+
+		function eliminar(id){
+            $.ajaxSetup({
+		        headers: {
+		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		        }
+            });
+            var url2 = location.href+'/eliminar/'+id;
+		    $.ajax({
+		        type: 'post',
+		        url: url2,
+		        success: function(data) {
+                    $("#tb").load(" #tb");
+		        	alertify.success('Eliminado con exito!');
+		        },
+		        error: function(data) {
+		        	alertify.error('Problema para eliminar!');
 		        }
 		    });
 		};

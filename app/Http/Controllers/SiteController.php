@@ -42,11 +42,12 @@ class SiteController extends Controller
 
     public function update(Request $request, $id)
     {
+        $name = Site::find($id)->name;
         $edit = Site::find($id)->update($request->all());
         $bitacora = Binnacle::create([
             'user_id'           => \Auth::User()->id,
             'action'            =>  'Editar',
-            'description'       => 'Lugar '.$lugar->name.' editado exitosamente!',
+            'description'       => 'Lugar '.$name.' editado exitosamente!',
             'date'              =>  Carbon::now(),
         ]);
         return Response()->json($edit);
