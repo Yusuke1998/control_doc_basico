@@ -15,7 +15,6 @@
             <th>Codigo de documento</th>
             <th>De</th>
             <th>Para</th>
-            <th>Comentario</th>
             <th>Fecha</th>
             <th scope="col">accion</th>
           </tr>
@@ -26,7 +25,6 @@
             <td>{{ $salida->document->code }}</td>
             <td>{{ $salida->from }}</td>
             <td>{{ $salida->to }}</td>
-            <td>{{ $salida->commentary }}</td>
             <td>{{ $salida->date }}</td>
             <td>
                 <a class="btn btn-sm" data-toggle="modal" data-target="#updateModal" onclick="editar({{ $salida->id }});" title="">Editar</a>

@@ -6,20 +6,21 @@ Route::get('/', function () {
 Route::get('documentos',function(){
 	return redirect(Route('dashboard'));
 });
-
 Route::get('reporte',function(){
 	return view('reportes.document');
 });
-
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('DireccionDeInformatica',function(){
+Route::get('Direccion-de-Informatica',function(){
 	return [
 		'Autor'=>
 		[
-			['nombre'=>'Jhonny Pérez','correo'=>'jhperez@unerg.edu.ve'],
+			'nombre'=>'Jhonny Perez',
+			'correo'=>
+			[
+				['jhperez@unerg.edu.ve'],
+				['jhonnyjose1998@gmail.com']
+			],
 		],
 		'Sistema'=>
 		[
@@ -120,7 +121,6 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	Route::post('tipos/actualizar/{id}','DocumentTypeController@update')->name('tipos.actualizar');
 	// documentos tipos
 
-
 	// Entradas y salidas por documento
 	Route::get('documentos/entradas/{id}','DocumentController@entradas')->name('documentos.entradas');
 	Route::get('documentos/salidas/{id}','DocumentController@salidas')->name('documentos.salidas');
@@ -140,6 +140,8 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	Route::get('bitacora/pdf/{tipo}','ReportesController@bitacora_pdf')->name('bitacora.pdf');
 	Route::get('documento/pdf/{id}','ReportesController@documento')->name('pdf');
 	Route::get('documentos/pdf/{tipo}','ReportesController@documento_pdf')->name('documento.pdf');
+	Route::get('entradas/pdf/{tipo}','ReportesController@entrada_pdf')->name('entrada.pdf');
+	Route::get('salidas/pdf/{tipo}','ReportesController@salida_pdf')->name('salida.pdf');
 	// Reportes
 
 	//Busqueda

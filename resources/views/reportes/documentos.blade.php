@@ -1,7 +1,7 @@
 @extends('layouts.template-reporte')
 @section('content')
 	<small>
-		<p align="center">Reporte de documentos.</p>
+		<p align="center">{{ $title[0] }}.</p>
 	</small>
 	<table id="tb" class="table table-striped table-bordered tb" cellspacing="0" width="100%">
 	  <thead class="black white-text">
