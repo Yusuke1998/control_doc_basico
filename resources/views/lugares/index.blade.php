@@ -20,7 +20,7 @@
 			    @foreach($lugares as $lugar)
 			    <tr>
                   <th>{{ $lugar->id }}</th>
-			      <td>{{ $lugar->site }}</td>
+			      <td>{{ $lugar->name }}</td>
 			      <td>{{ $lugar->area->name }}</td>
 			      <td>{{ $lugar->description }}</td>
 			      <td>
@@ -51,7 +51,7 @@
 
 	      <div class="modal-body mx-3">
 	        <div class="md-form mb-5">
-	          <input type="text" name="site" id="nombre" class="form-control validate">
+	          <input type="text" name="name" id="nombre" class="form-control validate">
 	          <label data-error="Error" data-success="Bien" for="nombre">Nombre</label>
 	        </div>
 	        <div class="md-form mb-4">
@@ -92,7 +92,7 @@
 	      <div class="modal-body mx-3">
 	        <div class="md-form mb-5">
               <input type="hidden" id="idu" name="id">
-	          <input type="text" name="site" id="nombreu" class="form-control validate">
+	          <input type="text" name="name" id="nombreu" class="form-control validate">
 	          <label data-error="Error" data-success="Bien" for="nombreu">Nombre</label>
 			</div>
 	        <div class="md-form mb-4">
@@ -165,7 +165,7 @@
 		        success: function(data) {
                     $('#idu').val(data.id);
                     $('#nombreu').focus();
-                    $('#nombreu').val(data.site);
+                    $('#nombreu').val(data.name);
                     $('#descripcionu').focus();
                     $('#descripcionu').val(data.description);
                     $('#areau').val(data.area_id);

@@ -25,6 +25,12 @@ class EntranceController extends Controller
         return view('documentos.entradas',compact('entradas','areas','lugares'));
     }
 
+    public function ver($id)
+    {
+        $entrada = Entrance::find($id);
+        return view('documentos.entradas-show',compact('entrada'));
+    }
+
     public function store(Request $request){
         $entrada = Entrance::create($request->all());
         $bitacora = Binnacle::create([

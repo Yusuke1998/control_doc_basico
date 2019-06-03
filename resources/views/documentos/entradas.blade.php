@@ -55,11 +55,16 @@ aria-hidden="true">
           </button>
         </div>
         <div class="modal-body mx-3">
-          <div class="md-form mb-5">
+          <div class="md-form mb-1">
             <i class="fas fa-envelope prefix grey-text"></i>
             <input type="hidden" name="document_id" id="document_id">
             <input type="text" id="code" name="code" class="form-control validate">
             <label data-error="wrong" data-success="right" for="code">Codigo de documento</label>
+          </div>
+          <div class="md-form mb-5">
+            <div class="text-center col-md-12">
+              <button type="button" id="btn-code" class="btn btn-sm btn-pink btn-block btn-rounded z-depth-1">Buscar documento</button>
+            </div>
           </div>
           <div class="md-form mb-5">
             <i class="fas fa-envelope prefix grey-text"></i>
@@ -76,17 +81,14 @@ aria-hidden="true">
             <textarea type="text" id="commentary" name="commentary" class="md-textarea form-control" rows="3"></textarea>
             <label data-error="wrong" data-success="right" for="commentary">Comentario</label>
           </div>
-          <select class="browser-default custom-select" name="area_id">
+          <select class="browser-default custom-select" name="area_id" id="area_id">
             <option selected disabled>Area</option>
             @foreach($areas as $area)
             	<option value="{{ $area->id }}">{{ $area->name }}</option>
             @endforeach
           </select>
-          <select class="browser-default custom-select" name="site_id">
+          <select class="browser-default custom-select" id="site_id" name="site_id">
             <option selected disabled>Lugar</option>
-            @foreach($lugares as $lugar)
-            	<option value="{{ $lugar->id }}">{{ $lugar->name }}</option>
-            @endforeach
           </select>
           
           <div class="md-form mb-5">
@@ -195,32 +197,44 @@ aria-hidden="true">
 		    });
 		});
 
-		$('#code').keyup(function (event) {
-			event.preventDefault();
-			var code = $('#code').val();
-			var url = location.href+'/buscar/'+code;
-			$.ajaxSetup({
-		        headers: {
-		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		        }
-            });
-            $.ajax({
-		        type: 'get',
-		        url: url,
-		        success: function(data) {
-                    $('#document_id').val(data.id);
-                    $('#code').focus();
-                    $('#code').val(data.code);
-                    $('#from').focus();
-                    $('#from').val(data.from);
-                    $('#to').focus();
-                    $('#to').val(data.to);
-		        },
-		        error: function(data) {
-		            console.log('Codigo no encontrado!');
-		        }
-		    });
-		} );
+		$('#btn-code').click(function(event){
+      event.preventDefault();
+      var code = $('#code').val();
+      var url = location.href+'/buscar/'+code;
+      if (code == '') {
+        alertify.error('Debes ingresar un codigo!');
+      }
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      $.ajax({
+          type: 'get',
+          url: url,
+          success: function(data) {
+            if (data.code) {
+                $('#document_id').val(data.id);
+                $('#code').focus();
+                $('#code').val(data.code);
+                $('#from').focus();
+                $('#from').val(data.from);
+                $('#to').focus();
+                $('#to').val(data.to);
+                alertify.success('El documento fue encontrado!');
+            }else{
+                alertify.error('El documento no existe!');
+                $('#document_id').val('');
+                $('#code').val('');
+                $('#from').val('');
+                $('#to').val('');
+            }
+          },
+          error: function(data) {
+              console.log('Error de conexion o busqueda!');
+          }
+      });
+    });
 
 		function editar(id){
             $.ajaxSetup({
@@ -305,6 +319,44 @@ aria-hidden="true">
 		        }
 		    });
 		};
+
+    function changed(url2, campoID=[]) {
+    axios.get(url2).then(function(response) {
+      var respuesta = response.data;
+      if (respuesta.length>0) {
+        $('#'+campoID[0]).html('<option value="">Seleccionar</option>')
+        $('#'+campoID[0]).removeAttr('disabled')
+        $('.'+campoID[0]).removeClass('text-muthed')
+        $('.'+campoID[0]).addClass('text-danger')
+        for (var i = 0; i < respuesta.length; i++) {
+          var html = '<option value="'+respuesta[i]['id']+'">'+respuesta[i]['name']+'</option>'
+          var dom = $('#'+campoID[0]).html()
+          var juntos = dom + html
+          $('#'+campoID[0]).html(juntos)
+        }
+      }else{
+        reset(campoID)
+      }
+    }).catch(function(error) {
+      console.log(error);
+      reset(campoID)
+    })
+
+  }
+  
+  function reset(campoID=[]) {
+    campoID.forEach(function(valor, indice, array) {
+      $('#'+valor).html('')
+      $('#'+valor).prop('disabled',true)
+    })
+  }
+
+  $('#area_id').change(function() {
+    var url2 = location.href+'/lugar/'+$('#area_id').val();
+    reset(['site_id']);
+    changed(url2, ['site_id']);
+  });
+
 	</script>
 	@stop
 @stop

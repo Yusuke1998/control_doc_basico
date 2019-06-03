@@ -9,7 +9,7 @@ class UsersTableSeeder extends Seeder
     {
     	$persona = Person::create([
     		'ci'		=>	'1010101010',
-    		'type_ci'	=>	'V',
+    		'type_ci'	=>	'cedula',
     		'firstname'	=>	'admin',
     		'lastname'	=>	'admin',
     		'position'	=>	'Root',

@@ -70,7 +70,7 @@ p {
 		    	@endif
 			</div>
 			@if(isset($documento['code']))
-		    	<h3 class="text-center underline mayus">N°{{ $documento['code'] }}</h3>
+		    	<h3 class="text-center underline mayus">{{ $documento['code'] }}</h3>
 		    @endif
 			@if(isset($documento['from']))
 		    	<p class="mayus">De: {{ $documento['from'] }}</p>

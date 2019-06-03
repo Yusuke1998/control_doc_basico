@@ -67,4 +67,10 @@ class SiteController extends Controller
         ]);
         return back();
     }
+
+    public function lugar($id)
+    {
+        $lugares = Site::select('id','name')->where('area_id', $id)->orderBy('id','asc')->get();
+        return $lugares;
+    }
 }

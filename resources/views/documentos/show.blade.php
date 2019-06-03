@@ -19,7 +19,7 @@
 					    @endif
 					</div>
 					@if(isset($documento['code'])&&!empty($documento['code']))
-				    	<h4 class="card-title col-md-12 text-center mb-5">N°{{ $documento['code'] }}</h4>
+				    	<h4 class="card-title col-md-12 text-center mb-5">{{ $documento['code'] }}</h4>
 				    @endif
 
 					@if(isset($documento['from'])&&!empty($documento['from']))

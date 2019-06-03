@@ -10,9 +10,9 @@ class CreateSitesTable extends Migration
     {
         Schema::create('sites', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('site');
+            $table->string('name');
             $table->integer('area_id')->unsigned();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
             $table->timestamps();
         });

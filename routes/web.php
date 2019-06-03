@@ -141,4 +141,9 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	Route::get('documento/pdf/{id}','ReportesController@documento')->name('pdf');
 	Route::get('documentos/pdf/{tipo}','ReportesController@documento_pdf')->name('documento.pdf');
 	// Reportes
+
+	//Busqueda
+	Route::get('entradas/lugar/{id}','SiteController@lugar');
+	Route::get('salidas/lugar/{id}','SiteController@lugar');
+	//Busqueda
 });
