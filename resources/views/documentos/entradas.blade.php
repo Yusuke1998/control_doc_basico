@@ -170,7 +170,7 @@ aria-hidden="true">
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		        }
 		    });
-            var form = $('#my_form').serialize();
+        var form = $('#my_form').serialize();
 		    var url = '{{ Route('entradas.store') }}';
 		    $.ajax({
 		        type: 'post',

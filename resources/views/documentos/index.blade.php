@@ -181,9 +181,39 @@
 		listar();
 		$('#my_form').submit(function(e) {
 			e.preventDefault();
-			guardar();
+			validar();
 		});
 	});
+
+	function validar(){
+        var type_id = $('#document_type_id').val();
+		var ci = $('#ci').val();
+		var code = $('#code').val();
+		var from = $('#from').val();
+		var to = $('#to').val();
+		var title = $('#title').val();
+        var date = $('#date').val();
+		if (type_id==null||type_id==''||ci==''||code==''||title==''||date==''||to==''||from=='') {
+			alertify.error('Algunos campos obligatorios estar vacios!');
+		}else{
+			guardar();
+		}
+	}
+
+	function validar2(id){
+        var type_id = $('#document_type_idU').val();
+		var ci = $('#ciU').val();
+		var code = $('#codeU').val();
+		var from = $('#fromU').val();
+		var to = $('#toU').val();
+		var title = $('#titleU').val();
+        var date = $('#dateU').val();
+		if (type_id==null||type_id==''||ci==''||code==''||title==''||date==''||to==''||from=='') {
+			alertify.error('Algunos campos obligatorios estar vacios!');
+		}else{
+			actualizar(id);
+		}
+	}
 
 	function guardar(){
 		var formData = new FormData(document.getElementById("my_form"));
@@ -253,7 +283,7 @@
 	$('#my_formU').submit(function(e) {
 		e.preventDefault();
 		let id = $('#idU').val();
-		actualizar(id);
+		validar2(id);
 	});
 
 	function actualizar(id){
