@@ -1,59 +1,97 @@
-@extends('layouts.template-reporte')
-@section('content')
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<!-- Card -->
-			<div class="card">
-			  <!-- Card image -->
-			  <div class="view overlay">
-			    <a href="#!">
-			      <div class="mask rgba-white-slight"></div>
-			    </a>
-			  </div>
-			  <!-- Card content -->
-			  <div class="card-body row">
-			    <!-- Title -->
-			    <div class="card-text col-md-12 row">
-			    	@if(isset($documento['header']))
-			    	<div class="col-md-6 text-left">{{ $documento['header'] }}</div>
-			    	@endif
-			    	@if(isset($documento['date']))
-			    	<div class="col-md-6 text-right">{{ $documento['date'] }}</div>
-			    	@endif
-				</div>
-				@if(isset($documento['code']))
-			    <h4 class="card-title col-md-12 text-center mb-5">N°{{ $documento['code'] }}</h4>
-			    @endif
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Documento {{ $documento['title'] }}</title>
+</head>
+	<body>
+<style>
 
-				@if(isset($documento['from']))
-			    <h6 class="card-title col-md-2">De: </h6><h6 class="card-title col-md-10">{{ $documento['from'] }}</h6>
-			    @endif
-			    
-				@if(isset($documento['to']))
-			    <h6 class="card-title col-md-2">Para: </h6><h6 class="card-title col-md-10">{{ $documento['to'] }}</h6>
-			    @endif
-			    
-				@if(isset($documento['affair']))
-			    <h6 class="card-title col-md-2">Asunto: </h6><h6 class="card-title col-md-10">{{ $documento['affair'] }}</h6>
-			    @endif
-			    <!-- Text -->
-			    <p class="card-text col-md-12 text-justify mb-5 mt-5">{{ $documento['text'] }}</p>
-			    @if(isset($documento['user']))
-			    <h6 class="card-title col-md-12">Att: {{ $documento['user'] }}</h6>
-			    @endif
-			    @if(isset($documento['position']))
-			    <h6 class="card-title col-md-12">{{ $documento['position'] }}</h6>
-			    @endif
-			  </div>
+html {
+	margin: 0;
+	padding: 10;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.container {
+  width: 100%;
+  padding-right: 25px;
+  padding-left: 25px;
+  padding-bottom: 30px;
+  padding-top: 30px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.gray {
+	background: lightgray;
+}
+
+.underline {
+	text-decoration: underline;
+}
+
+.mayus {
+	text-transform: uppercase;
+}
+
+</style>
+		<div class="container">
+		    <div>
+		    	@if(isset($documento['header']))
+			    	<div class="text-left">
+			    		<small>{{ $documento['header'] }}</small>
+			    	</div>
+		    	@endif
+		    	@if(isset($documento['date']))
+			    	<div class="text-right">
+			    		<small>{{ $documento['date'] }}</small>
+			    	</div>
+		    	@endif
 			</div>
-			<!-- Button -->	
-			<a href="#" class="btn btn-primary btn-sm">PDF</a>
-			@if(isset($documento['file_id']) && !empty($documento['file_id']))
-			<a href="{{ route('archivos.show',$documento['file_id']) }}" title="Ir al archivo" class="btn btn-primary btn-sm">ARCHIVO</a>
-			@endif
-			<!-- Card -->
+			@if(isset($documento['code']))
+		    	<h3 class="text-center underline mayus">N°{{ $documento['code'] }}</h3>
+		    @endif
+			@if(isset($documento['from']))
+		    	<p class="mayus">De: {{ $documento['from'] }}</p>
+		    @endif
+			@if(isset($documento['to']))
+		    	<p class="mayus">Para: {{ $documento['to'] }}</p>
+		    @endif
+			@if(isset($documento['affair']))
+		    	<p class="mayus">Asunto: {{ $documento['affair'] }}</p>
+		    @endif
+			<div class="text-justify mayus">
+			    <p>
+			    	{{ $documento['text'] }}
+			    </p>
+			</div>
+		    @if(isset($documento['user']))
+		    	<p >Att: {{ $documento['user'] }}</p>
+		    @endif
+		    @if(isset($documento['position']))
+		    	<p >{{ $documento['position'] }}</p>
+		    @endif
 		</div>
-	</div>
-</div>
-@stop
+	</body>
+</html>

@@ -22,7 +22,6 @@ class CreateDocumentsTable extends Migration
             $table->integer('user_id')->unsigned(); #usuario_id
             $table->integer('document_type_id')->unsigned()->nullable(); #tipo_id
             $table->integer('file_id')->unsigned()->nullable(); #archivo_id
-
             $table->foreign('person_id')->references('id')->on('people')->onDelete('cascade');
             $table->foreign('file_id')->references('id')->on('files')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

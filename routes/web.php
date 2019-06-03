@@ -16,11 +16,15 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('DireccionDeInformatica',function(){
-	return ['Autor'=>
+	return [
+		'Autor'=>
 		[
-			['estado'=>'inicio del sistema','fecha'=>'22/05/2019'],
 			['nombre'=>'Jhonny Pérez','correo'=>'jhperez@unerg.edu.ve'],
-			['estado'=>'sistema finalizado','fecha'=>'31/05/2019'],
+		],
+		'Sistema'=>
+		[
+			['estado'=>'inicio','fecha'=>'22/05/2019'],
+			['estado'=>'Finalizado','fecha'=>'04/06/2019'],
 		]
 	];
 })->name('autor');
@@ -68,13 +72,14 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 
 	// USUARIOS
 	Route::resource('usuarios','UsersController');
-	Route::post('editar/{id}','UsersController@editar')->name('user.editar');
+	Route::get('usuarios/editar/{id}','UsersController@editar')->name('usuarios.editar');
+	Route::post('usuarios/actualizar/{id}','UsersController@update')->name('usuarios.actualizar');
     Route::get('cantidad/usuarios','UsersController@cantidad')->name('user.cantidad');
+	Route::post('usuarios/eliminar/{id}','UsersController@destroy')->name('usuarios.eliminar');
 	// USUARIOS
 
 	// PERSONAS
 	Route::resource('personas','PersonController');
-	Route::post('editar/{id}','PersonController@editar')->name('person.editar');
     Route::get('cantidad/personas','PersonController@cantidad')->name('person.cantidad');
 	// PERSONAS
 
@@ -106,10 +111,10 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	Route::post('tipos/actualizar/{id}','DocumentTypeController@update')->name('tipos.actualizar');
 	// documentos tipos
 
-
 	// Entradas y salidas por documento
 	Route::get('documentos/entradas/{id}','DocumentController@entradas')->name('documentos.entradas');
 	Route::get('documentos/salidas/{id}','DocumentController@salidas')->name('documentos.salidas');
+	
 	// Entradas y salidas por documento
 
 	// Tablas de entradas y salidas
@@ -123,9 +128,8 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 
 	// Reportes
 	Route::get('reportes','ReportesController@index')->name('reportes.index');
-		// PDF
-	Route::get('bitacora/pdf/{tipe}','ReportesController@bitacora_pdf')->name('bitacora.pdf');
-		// EXCEL
-	Route::get('bitacora/excel/{tipe}','ReportesController@bitacora_excel')->name('bitacora.excel');
+	Route::get('bitacora/pdf/{tipo}','ReportesController@bitacora_pdf')->name('bitacora.pdf');
+	Route::get('documento/pdf/{id}','ReportesController@documento')->name('pdf');
+	Route::get('documentos/pdf/{tipo}','ReportesController@documento_pdf')->name('documento.pdf');
 	// Reportes
 });

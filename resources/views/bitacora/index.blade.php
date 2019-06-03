@@ -47,4 +47,12 @@
 		    </div>
 		</div>
 	</div>
+	@section('my-js')
+	<script type="text/javascript">
+	    $(document).ready(function() {
+	        var table = $('#tb').DataTable();
+	    });
+	</script>
+	<script>
+	@stop
 @stop

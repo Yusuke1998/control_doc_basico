@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $tipos = Document_type::all();
@@ -56,9 +61,12 @@ class FileController extends Controller
     {
         $user_id = \Auth::User()->id;
 
-        $persona = Person::create([
-            'ci'        =>  $request->ci,
-        ]);
+        $persona = Person::where('ci',$request->ci)->first();
+        if (is_null($persona)) {
+            $persona = Person::create([
+                'ci'        =>  $request->ci,
+            ]);
+        }
 
         if ($request->file('file')) {
             $file = $request->file('file');
@@ -170,6 +178,8 @@ class FileController extends Controller
     {
         $archivo = File::find($id);
         $name = $archivo->name;
+        $path = public_path().'\archivos';
+        \File::delete($path."\\".$archivo->file);
         $archivo->delete();
 
         $bitacora = Binnacle::create([

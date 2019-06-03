@@ -25,4 +25,12 @@ class Document extends Model
     public function document_type(){
     	return $this->belongsTo(Document_type::class);
     }
+
+    public function entrance(){
+        return $this->belongsTo(Entrance::class);
+    }
+
+    public function delivery(){
+        return $this->belongsTo(Delivery::class);
+    }
 }

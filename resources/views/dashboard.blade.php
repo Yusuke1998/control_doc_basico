@@ -191,7 +191,6 @@
           var errors = data.responseJSON;
       }
     });
-
 	    //pie
           var ctxP = document.getElementById("pieChart").getContext('2d');
 

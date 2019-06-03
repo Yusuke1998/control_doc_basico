@@ -68,7 +68,7 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         $user_id = \Auth::User()->id;
-        $code = time().'COD';
+        $code = 'COD'.time();
         $persona = Person::where('ci',$request->ci)->first();
         if (is_null($persona)) {
             $persona = Person::create([
@@ -120,6 +120,7 @@ class DocumentController extends Controller
     public function show($id){
         $documento = Document::find($id);
         $documento = [
+            'id'        => $documento->id,
             'code'      => $documento->code,
             'title'     => $documento->title,
             'header'    => $documento->header,
@@ -213,7 +214,11 @@ class DocumentController extends Controller
     {
         $documento = Document::find($id);
         $name = $documento->name;
+        $archivo = $documento->file;
         $documento->delete();
+        $path = public_path().'\archivos';
+        \File::delete($path."\\".$archivo->file);
+
         $bitacora = Binnacle::create([
             'user_id'           => \Auth::User()->id,
             'action'            =>  'Eliminar',

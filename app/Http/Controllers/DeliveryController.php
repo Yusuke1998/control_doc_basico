@@ -19,7 +19,7 @@ class DeliveryController extends Controller
     {
         $salidas = Delivery::all();
         $documentos = Document::all();
-        return view('salidas',compact('salidas','documentos'));
+        return view('documentos.salidas',compact('salidas','documentos'));
     }
 
     public function editar($id){

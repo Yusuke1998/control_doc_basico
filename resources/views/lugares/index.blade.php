@@ -59,7 +59,7 @@
 	          <label data-error="Error" data-success="Bien" for="descripcion">Descripcion</label>
 	        </div>
 	        <div class="md-form mb-4">
-	        	<select name="area_id" id="area">
+	        	<select name="area_id" id="area" class="form-control validate">
 	        		<option selected disable>Seleccion el Area</option>
 	        		@foreach($areas as $area)
 	        		<option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -100,7 +100,7 @@
 	          <label data-error="Error" data-success="Bien" for="orangeForm-pass">Descripcion</label>
 			</div>
 	        <div class="md-form mb-4">
-	        	<select name="area_id" id="areau">
+	        	<select name="area_id" id="areau" class="form-control validate">
 	        		<option selected disable>Seleccion el Area</option>
 	        		@foreach($areas as $area)
 	        		<option value="{{ $area->id }}">{{ $area->name }}</option>

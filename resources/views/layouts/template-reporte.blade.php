@@ -83,6 +83,7 @@
 	    content: "";
 	}
 </style>
+@yield('style')
 	<p style="text-align: right;">Fecha: {{ date('d/m/Y') }}</p>
 	<p align="center"> @yield('title') </p>
 	@yield('content')

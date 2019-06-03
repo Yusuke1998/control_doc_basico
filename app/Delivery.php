@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Delivery extends Model
 {
     protected $fillable = [
-    	'date','commentary','functionary_e','functionary_r','area_id','site_id','document_id'
+    	'date','commentary','from','to','area_id','site_id','document_id'
     ];
 
     public function document(){
-    	return $this->belongsTo(Document::class);
+        return $this->hasOne(Document::class);
     }
 
     public function area(){
