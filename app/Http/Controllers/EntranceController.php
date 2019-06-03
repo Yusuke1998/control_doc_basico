@@ -27,8 +27,8 @@ class EntranceController extends Controller
 
     public function ver($id)
     {
-        $entrada = Entrance::find($id);
-        return view('documentos.entradas-show',compact('entrada'));
+        $dato = Entrance::find($id);
+        return view('documentos.entrada-salida-show',compact('dato'));
     }
 
     public function store(Request $request){

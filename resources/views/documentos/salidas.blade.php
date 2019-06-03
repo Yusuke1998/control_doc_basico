@@ -137,19 +137,15 @@ aria-hidden="true">
             <textarea type="text" id="commentaryu" name="commentary" class="md-textarea form-control" rows="3"></textarea>
             <label data-error="wrong" data-success="right" for="commentaryu">Comentario</label>
           </div>
-          <select class="browser-default custom-select" id="areau" name="area_id">
+          <select class="browser-default custom-select" name="area_id" id="area_idu">
             <option selected disabled>Area</option>
             @foreach($areas as $area)
-            	<option value="{{ $area->id }}">{{ $area->name }}</option>
+              <option value="{{ $area->id }}">{{ $area->name }}</option>
             @endforeach
           </select>
-          <select class="browser-default custom-select" name="site_id" id="siteu">
+          <select class="browser-default custom-select" id="site_idu" name="site_id">
             <option selected disabled>Lugar</option>
-            @foreach($lugares as $lugar)
-            	<option value="{{ $lugar->id }}">{{ $lugar->name }}</option>
-            @endforeach
           </select>
-          
           <div class="md-form mb-5">
             <input placeholder="Ingresa fecha" type="date" name="date" id="dateu" class="form-control datepicker">
           </div>
@@ -256,10 +252,10 @@ aria-hidden="true">
                     $('#tou').val(data.to);
                     $('#commentaryu').focus();
                     $('#commentaryu').val(data.commentary);
-                    $('#areau').focus();
-                    $('#areau').val(data.area_id);
-                    $('#siteu').focus();
-                    $('#siteu').val(data.site_id);
+                    $('#area_idu').focus();
+                    $('#area_idu').val(data.area_id);
+                    $('#site_idu').focus();
+                    $('#site_idu').val(data.site_id);
                     $('#dateu').focus();
                     $('#dateu').val(data.date);
 		        },
@@ -354,7 +350,12 @@ aria-hidden="true">
     reset(['site_id']);
     changed(url2, ['site_id']);
   });
-  
+
+  $('#area_idu').change(function() {
+    var url2 = location.href+'/lugar/'+$('#area_idu').val();
+    reset(['site_idu']);
+    changed(url2, ['site_idu']);
+  });
 	</script>
 	@stop
 @stop

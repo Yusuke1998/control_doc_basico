@@ -34,7 +34,7 @@ class DocumentController extends Controller
         $documentos = DB::table('documents')
         ->join('document_types','document_types.id','=','documents.document_type_id')
         ->join('people','people.id','=','documents.person_id')
-        ->select('documents.id as id','people.ci as ci','title','from','to','affair','date','document_types.name as type')->get();
+        ->select('code', 'documents.id as id','people.ci as ci','title','from','to','affair','date','document_types.name as type')->get();
         $documentos = ['data'=>$documentos];
         return $documentos;
     }

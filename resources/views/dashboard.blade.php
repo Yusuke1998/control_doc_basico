@@ -75,7 +75,7 @@
                   @foreach($entradas as $entrada)
                   <tr>
                       <td>
-                        <a href="{{ route('documentos.ver',$entrada->document_id) }}" class="btn btn-sm" title="Ver documento">{{ $entrada->document->title }}</a>
+                        <a href="{{ route('documentos.ver',$entrada->document_id) }}" class="btn btn-sm" title="Ver documento">{{ $entrada->document->code }}</a>
                       </td>
                       <td>
                         {{ $entrada->created_at->format('d-m-Y') }}
@@ -115,7 +115,7 @@
                   @foreach($salidas as $salida)
                   <tr>
                       <td>
-                        <a href="{{ route('documentos.ver',$salida->document_id) }}" class="btn btn-sm" title="Ver documento">{{ $salida->document->title }}</a>
+                        <a href="{{ route('documentos.ver',$salida->document_id) }}" class="btn btn-sm" title="Ver documento">{{ $salida->document->code }}</a>
                       </td>
                       <td>
                         {{ $salida->created_at->format('d-m-Y') }}
@@ -123,7 +123,7 @@
                         {{ $salida->created_at->diffForHumans() }}
                       </td>
                       <td>
-                        <a href="{{ route('salidas.ver',$salida->id) }}" class="btn btn-sm" title="Ver entrada">Ver entrada</a>
+                        <a href="{{ route('salidas.ver',$salida->id) }}" class="btn btn-sm" title="Ver entrada">Ver salida</a>
                       </td>
                   </tr>
                   @endforeach

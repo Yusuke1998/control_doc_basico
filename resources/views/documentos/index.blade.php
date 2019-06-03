@@ -10,7 +10,7 @@
 				<table id="tb" class="display" style="width:100%">
 					<thead class="black white-text">
 						<tr>
-							<th>#</th>
+							<th>Codigo</th>
 							<th>Cedula</th>
 							<th>Titulo</th>
 							<th>De</th>
@@ -208,7 +208,7 @@
 			"processing": 'true',
 			 "ajax": 'todos/documentos',
 			 "columns": [
-	            { "data": "id" },
+	            { "data": "code" },
 	            { "data": "ci" },
 	            { "data": "title" },
 	            { "data": "from" },

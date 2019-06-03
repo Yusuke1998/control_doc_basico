@@ -27,8 +27,8 @@ class DeliveryController extends Controller
 
     public function ver($id)
     {
-        $salida = Delivery::find($id);
-        return view('documentos.salidas-show',compact('Salida'));
+        $dato = Delivery::find($id);
+        return view('documentos.entrada-salida-show',compact('dato'));
     }
 
     public function store(Request $request){
