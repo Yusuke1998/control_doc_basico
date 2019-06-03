@@ -52,16 +52,25 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	// ENTRADAS
 	Route::resource('entradas','EntranceController');
 	Route::get('entradas/ver/{id}','EntranceController@ver')->name('entradas.ver');
-	Route::post('entradas/editar/{id}','EntranceController@editar')->name('entradas.editar');
+	Route::get('entradas/editar/{id}','EntranceController@editar')->name('entradas.editar');
+	Route::post('entradas/actualizar/{id}','EntranceController@update')->name('entradas.actualizar');
+	Route::post('entradas/eliminar/{id}','EntranceController@destroy')->name('entradas.eliminar');
     Route::get('entradas/cantidad','EntranceController@cantidad')->name('entradas.cantidad');
 	// ENTRADAS
 
 	// SALIDAS
 	Route::resource('salidas','DeliveryController');
 	Route::get('salidas/ver/{id}','DeliveryController@ver')->name('salidas.ver');
-    Route::post('salidas/editar/{id}','DeliveryController@editar')->name('salidas.editar');
+    Route::get('salidas/editar/{id}','DeliveryController@editar')->name('salidas.editar');
+	Route::post('salidas/actualizar/{id}','DeliveryController@update')->name('salidas.actualizar');
+	Route::post('salidas/eliminar/{id}','DeliveryController@destroy')->name('salidas.eliminar');
     Route::get('salidas/cantidad','DeliveryController@cantidad')->name('salidas.cantidad');
 	// SALIDAS
+
+    // Buscar documento
+    Route::get('entradas/buscar/{code}','DocumentController@documentCode');
+    Route::get('salidas/buscar/{code}','DocumentController@documentCode');
+    // Buscar documento
 
     // GRAFICAS
 	Route::get('/charts','ChartsController@charts')->name('charts');
@@ -111,10 +120,10 @@ Route::group(['prefix'	=>	'documentos', 'middleware'	=>	'auth'],function(){
 	Route::post('tipos/actualizar/{id}','DocumentTypeController@update')->name('tipos.actualizar');
 	// documentos tipos
 
+
 	// Entradas y salidas por documento
 	Route::get('documentos/entradas/{id}','DocumentController@entradas')->name('documentos.entradas');
 	Route::get('documentos/salidas/{id}','DocumentController@salidas')->name('documentos.salidas');
-	
 	// Entradas y salidas por documento
 
 	// Tablas de entradas y salidas

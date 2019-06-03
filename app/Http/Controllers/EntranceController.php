@@ -20,20 +20,62 @@ class EntranceController extends Controller
     public function index()
     {
         $entradas = Entrance::all();
-        $documentos = Document::all();
         $areas = Area::all();
         $lugares = Site::all();
-        return view('documentos.entradas',compact('entradas','documentos','areas','lugares'));
+        return view('documentos.entradas',compact('entradas','areas','lugares'));
+    }
+
+    public function store(Request $request){
+        $entrada = Entrance::create($request->all());
+        $bitacora = Binnacle::create([
+            'user_id'           => \Auth::User()->id,
+            'action'            =>  'Crear',
+            'description'       =>  'Nueva entrada de documento: '.$entrada->document->code.' agregada exitosamente!',
+            'date'              =>  Carbon::now(),
+        ]);
+        return Response()->json($entrada);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $name = Entrance::find($id)->document->code;
+        $edit = Entrance::find($id)->update($request->all());
+        $bitacora = Binnacle::create([
+            'user_id'           => \Auth::User()->id,
+            'action'            =>  'Actualizar',
+            'description'       =>  'Entrada de documento '.$name.' actualizada exitosamente!',
+            'date'              =>  Carbon::now(),
+        ]);
+        return Response()->json($edit);
     }
 
     public function editar($id){
         $entrada = Entrance::find($id);
+        $entrada = [
+            'id'            =>  $entrada->id,
+            'from'          =>  $entrada->from,
+            'to'            =>  $entrada->to,
+            'date'          =>  $entrada->date,
+            'commentary'    =>  $entrada->commentary,
+            'area_id'       =>  $entrada->area_id,
+            'site_id'       =>  $entrada->site_id,
+            'code'          =>  $entrada->document->code,
+            'document_id'   =>  $entrada->document->id,
+        ];
         return Response()->json($entrada);
     }
 
-    public function ver($id)
+    public function destroy($id)
     {
-        return 'Soy la entrada '.$id;
+        $entrada = Entrance::find($id);
+        $name = $entrada->document->code;
+        $entrada->delete();
+        $bitacora = Binnacle::create([
+            'user_id'           => \Auth::User()->id,
+            'action'            =>  'Eliminar',
+            'description'       =>  'Entrada de documento '.$name.' eliminada exitosamente!',
+            'date'              =>  Carbon::now(),
+        ]);
+        return back();
     }
-
 }

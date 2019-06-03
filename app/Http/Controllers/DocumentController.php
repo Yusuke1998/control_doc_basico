@@ -259,4 +259,9 @@ class DocumentController extends Controller
             return Response()->json($data->all());
         }
     }
+
+    public function documentCode($code){
+        $documento = Document::where('code',$code)->first();
+        return Response()->json($documento);
+    }
 }

@@ -27,10 +27,10 @@ class Document extends Model
     }
 
     public function entrance(){
-        return $this->belongsTo(Entrance::class);
+        return $this->hasOne(Entrance::class);
     }
 
     public function delivery(){
-        return $this->belongsTo(Delivery::class);
+        return $this->hasOne(Delivery::class);
     }
 }

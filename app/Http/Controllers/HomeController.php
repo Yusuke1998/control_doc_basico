@@ -18,13 +18,13 @@ class HomeController extends Controller
     {
     	$documentos = Document::all();
         $entradas = Entrance::orderBy('created_at','DESC')
-        ->select('id','created_at','date','commentary','functionary_e','functionary_r','area_id','site_id','document_id')
+        ->select('id','created_at','date','commentary','from','to','area_id','site_id','document_id')
         ->latest('created_at')
         ->take(2)
         ->get();
 
         $salidas = Delivery::orderBy('created_at','DESC')
-        ->select('id','created_at','date','commentary','functionary_e','functionary_r','area_id','site_id','document_id')
+        ->select('id','created_at','date','commentary','from','to','area_id','site_id','document_id')
         ->latest('created_at')
         ->take(2)
         ->get();
